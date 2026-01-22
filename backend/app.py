@@ -22,10 +22,10 @@ def get_books():
     page_size = request.args.get('page_size', default=10, type=int)
 
     # Call the get_all_books function with the page and page_size parameters
-    books = get_all_books(page=page, page_size=page_size)
+    result = get_all_books(page=page, page_size=page_size)
 
-    # Return the books as a JSON response
-    return jsonify(books)
+    # Return the books as a JSON response with pagination metadata
+    return jsonify(result)
 
 
 # GET /api/v1/books/author/<author> - returns a list of all books by the given author
@@ -78,6 +78,14 @@ def get_all_books(page=1, page_size=10):
     conn = sqlite3.connect('db.sqlite')
     cursor = conn.cursor()
 
+    # Get total count of books
+    cursor.execute('SELECT COUNT(*) FROM book;')
+    total_count = cursor.fetchone()[0]
+
+    # Calculate total pages
+    import math
+    total_pages = math.ceil(total_count / page_size)
+
     # Calculate the offset based on the page number and page size
     offset = (page - 1) * page_size
 
@@ -99,8 +107,16 @@ def get_all_books(page=1, page_size=10):
     # Close the database connection
     conn.close()
 
-    # Return the books as a JSON response
-    return book_list
+    # Return the books with pagination metadata
+    return {
+        'data': book_list,
+        'pagination': {
+            'page': page,
+            'page_size': page_size,
+            'total': total_count,
+            'total_pages': total_pages
+        }
+    }
 
 
 def get_authors():
