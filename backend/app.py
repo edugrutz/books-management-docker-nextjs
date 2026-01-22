@@ -67,6 +67,12 @@ def create_book():
 
     return jsonify(create_new_book(book_data))
 
+# DELETE /api/v1/books/<id> - Deleta um livro pelo ID
+@app.route('/api/v1/books/<int:book_id>', methods=['DELETE'])
+def delete_book(book_id):
+    result, status_code = delete_book_by_id(book_id)
+    return jsonify(result), status_code
+
 
 def get_all_books(page=1, page_size=10):
     conn = sqlite3.connect('db.sqlite')
@@ -229,6 +235,26 @@ def create_new_book(book_data):
 
     # Return a message to the user
     return {'message': 'Book created successfully.'}, 201
+
+def delete_book_by_id(book_id):
+    conn = sqlite3.connect('db.sqlite')
+    cursor = conn.cursor()
+
+    # Verifica se o livro existe antes de deletar
+    cursor.execute('SELECT id FROM book WHERE id = ?;', (book_id,))
+    book = cursor.fetchone()
+
+    if not book:
+        conn.close()
+        return {'error': 'Book not found.'}, 404
+
+    # Executa a remoção
+    cursor.execute('DELETE FROM book WHERE id = ?;', (book_id,))
+    
+    conn.commit()
+    conn.close()
+
+    return {'message': 'Book deleted successfully.'}, 200
 
 
 # # GET /api/v1/books
