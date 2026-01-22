@@ -3,7 +3,7 @@
 import { Book } from "@/types/book";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { deleteBookAction } from "@/actions/book-actions";
+import { deleteBookAction } from "@/actions/delete-book";
 
 export function BookCard({ book }: { book: Book }) {
     return (
