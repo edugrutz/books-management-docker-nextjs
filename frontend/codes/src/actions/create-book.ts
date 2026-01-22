@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 
-const API_URL = process.env.API_URL!
+const API_URL = process.env.NEXT_PUBLIC_API_URL!
 
 export async function createBookAction(formData: FormData) {
     const title = formData.get("title") as string
