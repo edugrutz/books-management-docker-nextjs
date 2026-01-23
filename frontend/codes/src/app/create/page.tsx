@@ -26,6 +26,11 @@ export default function CreatePage() {
                 </div>
 
                 <div>
+                    <Label htmlFor="pubdate">Data de publicação</Label>
+                    <Input id="pubdate" name="pubdate" type="date" required />
+                </div>
+
+                <div>
                     <Label htmlFor="publisher">Editora</Label>
                     <Input id="publisher" name="publisher" placeholder="Nome da editora" />
                 </div>

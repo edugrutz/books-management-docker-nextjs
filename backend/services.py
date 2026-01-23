@@ -43,6 +43,7 @@ def serialize_book(book):
         'authors': book['authors'],
         'publisher': book['publisher'],
         'synopsis': book['synopsis'],
+        'pubdate': book['pubdate'],
     }
 
 
@@ -291,11 +292,12 @@ def create_new_book(book_data):
         authors = str(book_data.get('authors', '')).strip()
         publisher = str(book_data.get('publisher', '')).strip()
         synopsis = str(book_data.get('synopsis', '')).strip()
+        pubdate = str(book_data.get('pubdate', '')).strip()
         
         # Execute a query to create a new book
         cursor.execute(
-            'INSERT INTO book (id, title, author, author_slug, author_bio, authors, publisher, synopsis) VALUES (?, ?, ?, ?, ?, ?, ?, ?);',
-            (new_id, title, author, author_slug, author_bio, authors, publisher, synopsis)
+            'INSERT INTO book (id, title, author, author_slug, author_bio, authors, publisher, synopsis, pubdate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);',
+            (new_id, title, author, author_slug, author_bio, authors, publisher, synopsis, pubdate)
         )
         
         conn.commit()
