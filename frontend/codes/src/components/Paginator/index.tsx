@@ -18,11 +18,14 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
+import { useTranslation } from "react-i18next"
+
 export function Paginator({ page, totalPages, pageSize, onPageChange, onPageSizeChange }: PaginatorProps) {
+    const { t } = useTranslation()
     return (
         <div className="flex items-center justify-between gap-4">
             <Field orientation="horizontal" className="w-fit">
-                <FieldLabel htmlFor="select-rows-per-page">Rows per page</FieldLabel>
+                <FieldLabel htmlFor="select-rows-per-page">{t('actions.rows_per_page')}</FieldLabel>
                 <Select
                     value={pageSize.toString()}
                     onValueChange={(value) => onPageSizeChange(Number(value))}

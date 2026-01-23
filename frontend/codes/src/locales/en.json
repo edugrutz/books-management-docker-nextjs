@@ -1,0 +1,38 @@
+{
+    "header": {
+        "title": "Digital Library",
+        "description": "Manage your book collection"
+    },
+    "actions": {
+        "create_book": "New Book",
+        "search": "Search books...",
+        "cancel": "Cancel",
+        "create": "Create Book",
+        "creating": "Creating...",
+        "delete": "Delete",
+        "rows_per_page": "Rows per page",
+        "previous": "Previous",
+        "next": "Next"
+    },
+    "filters": {
+        "general": "General search",
+        "title": "Search by title",
+        "author": "Search by author",
+        "placeholder_general": "General Search",
+        "placeholder_title": "Ex: The Little Prince",
+        "placeholder_author": "Ex: Antoine de Saint-Exupéry"
+    },
+    "book": {
+        "author": "Author",
+        "pubdate": "Published",
+        "title_label": "Title",
+        "author_label": "Author",
+        "author_bio": "Author Biography",
+        "publisher": "Publisher",
+        "synopsis": "Synopsis",
+        "new_book_title": "Create new book",
+        "new_book_desc": "Fill in the fields below to add a new book to your library.",
+        "other_authors": "Other Authors",
+        "about_author": "About the Author"
+    }
+}

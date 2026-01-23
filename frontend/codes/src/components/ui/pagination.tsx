@@ -8,11 +8,14 @@ import {
 import { cn } from "@/lib/utils"
 import { buttonVariants, type Button } from "@/components/ui/button"
 
+import { useTranslation } from "react-i18next"
+
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
+  const { t } = useTranslation()
   return (
     <nav
       role="navigation"
-      aria-label="pagination"
+      aria-label={t('pagination.label', 'pagination')}
       data-slot="pagination"
       className={cn("mx-auto flex w-full justify-center", className)}
       {...props}
@@ -69,15 +72,16 @@ function PaginationPrevious({
   className,
   ...props
 }: React.ComponentProps<typeof PaginationLink>) {
+  const { t } = useTranslation()
   return (
     <PaginationLink
-      aria-label="Go to previous page"
+      aria-label={t('actions.previous')}
       size="default"
       className={cn("gap-1 px-2.5 sm:pl-2.5", className)}
       {...props}
     >
       <ChevronLeftIcon />
-      <span className="hidden sm:block">Previous</span>
+      <span className="hidden sm:block">{t('actions.previous')}</span>
     </PaginationLink>
   )
 }
@@ -86,14 +90,15 @@ function PaginationNext({
   className,
   ...props
 }: React.ComponentProps<typeof PaginationLink>) {
+  const { t } = useTranslation()
   return (
     <PaginationLink
-      aria-label="Go to next page"
+      aria-label={t('actions.next')}
       size="default"
       className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
       {...props}
     >
-      <span className="hidden sm:block">Next</span>
+      <span className="hidden sm:block">{t('actions.next')}</span>
       <ChevronRightIcon />
     </PaginationLink>
   )

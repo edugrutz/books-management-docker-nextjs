@@ -15,8 +15,10 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { BookPlus, Loader2 } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 export function CreateBookDialog() {
+    const { t } = useTranslation()
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
@@ -28,7 +30,7 @@ export function CreateBookDialog() {
             await createBookAction(formData)
             setOpen(false)
         } catch (e) {
-            setError(e instanceof Error ? e.message : "Erro ao criar livro")
+            setError(e instanceof Error ? e.message : t('actions.error_creating'))
         } finally {
             setLoading(false)
         }
@@ -38,14 +40,14 @@ export function CreateBookDialog() {
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button variant="default" size="lg">
-                    <BookPlus className="mr-2 h-5 w-5" /> Add Book
+                    <BookPlus className="mr-2 h-5 w-5" /> {t('actions.create_book')}
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
-                    <DialogTitle className="text-2xl font-bold">Criar novo livro</DialogTitle>
+                    <DialogTitle className="text-2xl font-bold">{t('book.new_book_title')}</DialogTitle>
                     <DialogDescription>
-                        Preencha os campos abaixo para adicionar um novo livro à sua biblioteca.
+                        {t('book.new_book_desc')}
                     </DialogDescription>
                 </DialogHeader>
 
@@ -58,24 +60,24 @@ export function CreateBookDialog() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <Label htmlFor="title">Título *</Label>
-                            <Input id="title" name="title" placeholder="Ex: O Pequeno Príncipe" required />
+                            <Label htmlFor="title">{t('book.title_label')} *</Label>
+                            <Input id="title" name="title" placeholder={t('filters.placeholder_title')} required />
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="author">Autor *</Label>
-                            <Input id="author" name="author" placeholder="Ex: Antoine de Saint-Exupéry" required />
+                            <Label htmlFor="author">{t('book.author_label')} *</Label>
+                            <Input id="author" name="author" placeholder={t('filters.placeholder_author')} required />
                         </div>
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="author_bio">Biografia do Autor</Label>
-                        <Textarea id="author_bio" name="author_bio" placeholder="Breve resumo sobre o autor..." className="min-h-[80px]" />
+                        <Label htmlFor="author_bio">{t('book.author_bio')}</Label>
+                        <Textarea id="author_bio" name="author_bio" placeholder="..." className="min-h-[80px]" />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <Label htmlFor="pubdate">Data de publicação *</Label>
+                            <Label htmlFor="pubdate">{t('book.pubdate')} *</Label>
                             <Input
                                 id="pubdate"
                                 name="pubdate"
@@ -86,28 +88,28 @@ export function CreateBookDialog() {
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="publisher">Editora</Label>
-                            <Input id="publisher" name="publisher" placeholder="Nome da editora" />
+                            <Label htmlFor="publisher">{t('book.publisher')}</Label>
+                            <Input id="publisher" name="publisher" placeholder="..." />
                         </div>
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="synopsis">Sinopse</Label>
-                        <Textarea id="synopsis" name="synopsis" placeholder="Resumo do livro..." rows={5} className="min-h-[120px]" />
+                        <Label htmlFor="synopsis">{t('book.synopsis')}</Label>
+                        <Textarea id="synopsis" name="synopsis" placeholder="..." rows={5} className="min-h-[120px]" />
                     </div>
 
                     <div className="flex justify-end gap-3 pt-4">
                         <Button type="button" variant="outline" onClick={() => setOpen(false)} disabled={loading}>
-                            Cancelar
+                            {t('actions.cancel')}
                         </Button>
                         <Button type="submit" disabled={loading}>
                             {loading ? (
                                 <>
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                    Criando...
+                                    {t('actions.creating')}
                                 </>
                             ) : (
-                                "Criar Livro"
+                                t('actions.create')
                             )}
                         </Button>
                     </div>

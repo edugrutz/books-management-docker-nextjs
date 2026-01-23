@@ -1,0 +1,38 @@
+{
+    "header": {
+        "title": "Biblioteca Digital",
+        "description": "Gerencie sua coleção de livros"
+    },
+    "actions": {
+        "create_book": "Novo Livro",
+        "search": "Buscar livros...",
+        "cancel": "Cancelar",
+        "create": "Criar Livro",
+        "creating": "Criando...",
+        "delete": "Excluir",
+        "rows_per_page": "Linhas por página",
+        "previous": "Anterior",
+        "next": "Próximo"
+    },
+    "filters": {
+        "general": "Busca geral",
+        "title": "Busca por título",
+        "author": "Busca por autor",
+        "placeholder_general": "Busca Geral",
+        "placeholder_title": "Ex: O Pequeno Príncipe",
+        "placeholder_author": "Ex: Antoine de Saint-Exupéry"
+    },
+    "book": {
+        "author": "Autor",
+        "pubdate": "Publicação",
+        "title_label": "Título",
+        "author_label": "Autor",
+        "author_bio": "Biografia do Autor",
+        "publisher": "Editora",
+        "synopsis": "Sinopse",
+        "new_book_title": "Criar novo livro",
+        "new_book_desc": "Preencha os campos abaixo para adicionar um novo livro à sua biblioteca.",
+        "other_authors": "Outros Autores",
+        "about_author": "Sobre o Autor"
+    }
+}

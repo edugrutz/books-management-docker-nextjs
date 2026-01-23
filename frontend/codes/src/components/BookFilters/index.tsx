@@ -3,6 +3,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Search, User, Layers } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface BookFiltersProps {
     general: string;
@@ -23,17 +24,19 @@ export function BookFilters({
     onAuthorChange,
     className
 }: BookFiltersProps) {
+    const { t } = useTranslation();
+
     return (
         <div className={`flex flex-col gap-4 w-full ${className}`}>
             <div className="flex flex-col gap-1.5 w-full">
                 <Label htmlFor="search-general" className="text-[10px] font-bold uppercase text-muted-foreground ml-1">
-                    Busca geral
+                    {t('filters.general')}
                 </Label>
                 <div className="relative">
                     <Layers className="absolute left-3 top-2.5 text-muted-foreground" size={16} />
                     <Input
                         id="search-general"
-                        placeholder="General Search"
+                        placeholder={t('filters.placeholder_general')}
                         value={general}
                         onChange={(e) => onGeneralChange(e.target.value)}
                         className="pl-10 bg-secondary"
@@ -43,13 +46,13 @@ export function BookFilters({
             <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1.5">
                     <Label htmlFor="search-title" className="text-[10px] font-bold uppercase text-muted-foreground ml-1">
-                        Busca por título
+                        {t('filters.title')}
                     </Label>
                     <div className="relative">
                         <Search className="absolute left-3 top-2.5 text-muted-foreground" size={16} />
                         <Input
                             id="search-title"
-                            placeholder="Search by title"
+                            placeholder={t('filters.placeholder_title')}
                             value={title}
                             onChange={(e) => onTitleChange(e.target.value)}
                             className="pl-10 bg-secondary"
@@ -58,13 +61,13 @@ export function BookFilters({
                 </div>
                 <div className="flex flex-col gap-1.5">
                     <Label htmlFor="search-author" className="text-[10px] font-bold uppercase text-muted-foreground ml-1">
-                        Busca por autor
+                        {t('filters.author')}
                     </Label>
                     <div className="relative">
                         <User className="absolute left-3 top-2.5 text-muted-foreground" size={16} />
                         <Input
                             id="search-author"
-                            placeholder="Search by author"
+                            placeholder={t('filters.placeholder_author')}
                             value={author}
                             onChange={(e) => onAuthorChange(e.target.value)}
                             className="pl-10 bg-secondary"
