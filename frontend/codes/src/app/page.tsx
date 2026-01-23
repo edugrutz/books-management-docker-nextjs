@@ -1,6 +1,6 @@
 "use client"
 
-import { getBooks } from "@/lib/api";
+import { getBooks } from "@/services/api";
 import { BookCard } from "@/components/BookCard";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
