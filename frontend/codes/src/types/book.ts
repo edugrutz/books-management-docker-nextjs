@@ -6,10 +6,12 @@ export interface Book {
 
 export type BooksResponse = {
     data: Book[]
-    pagination: {
-        page: number
-        page_size: number
-        total: number
-        total_pages: number
+    meta: {
+        pagination: {
+            page: number
+            page_size: number
+            total: number
+            total_pages: number
+        }
     }
 }

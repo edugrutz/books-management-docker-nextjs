@@ -9,7 +9,7 @@ import { Paginator } from "@/components/Paginator";
 import { useState, useEffect } from "react";
 import { Book } from "@/types/book";
 import { SearchBar } from "@/components/SearchBar";
-import { searchBooks } from "@/services/api";
+import { searchBooksByTitle, searchBooksByAuthorName } from "@/services/api";
 import { useDebounce } from "@/hooks/useDebounce";
 import { deleteBookAction } from "@/actions/delete-book";
 
@@ -20,16 +20,15 @@ export default function Home() {
   const [pageSize, setPageSize] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
-  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  const [titleSearchTerm, setTitleSearchTerm] = useState("");
+  const debouncedTitleSearchTerm = useDebounce(titleSearchTerm, 500);
+
+  const [authorSearchTerm, setAuthorSearchTerm] = useState("");
+  const debouncedAuthorSearchTerm = useDebounce(authorSearchTerm, 500);
 
   const handlePageSizeChange = (newPageSize: number) => {
     setPageSize(newPageSize);
-    setPage(1);
-  };
-
-  const handleSearch = (title: string) => {
-    setSearchTerm(title);
     setPage(1);
   };
 
@@ -37,20 +36,27 @@ export default function Home() {
     const fetchBooks = async () => {
       setLoading(true);
       try {
-        const response = debouncedSearchTerm
-          ? await searchBooks(debouncedSearchTerm, page, pageSize)
-          : await getBooks(page, pageSize);
+        let response;
+
+        if (debouncedTitleSearchTerm) {
+          response = await searchBooksByTitle(debouncedTitleSearchTerm, page, pageSize);
+        } else if (debouncedAuthorSearchTerm) {
+          response = await searchBooksByAuthorName(debouncedAuthorSearchTerm, page, pageSize);
+        } else {
+          response = await getBooks(page, pageSize);
+        }
 
         setBooks(response.data);
-        setTotalPages(response.pagination.total_pages);
+        setTotalPages(response.meta.pagination.total_pages);
       } catch (error) {
         console.error(error);
       } finally {
         setLoading(false);
       }
     };
+
     fetchBooks();
-  }, [debouncedSearchTerm, page, pageSize]);
+  }, [debouncedTitleSearchTerm, debouncedAuthorSearchTerm, page, pageSize]);
 
   const handleDelete = async (id: number) => {
     setBooks(prev => prev.filter(book => book.id !== id))
@@ -67,7 +73,25 @@ export default function Home() {
       <div className="flex justify-end">
         <Button asChild variant="default" ><Link href="/create"><Plus /> Add Book</Link></Button>
       </div>
-      <SearchBar onSearch={handleSearch} />
+      <div className="flex gap-4">
+        <SearchBar
+          onSearch={(value) => {
+            setTitleSearchTerm(value);
+            setAuthorSearchTerm("");
+            setPage(1);
+          }}
+          placeholder="Search by title"
+        />
+
+        <SearchBar
+          onSearch={(value) => {
+            setAuthorSearchTerm(value);
+            setTitleSearchTerm("");
+            setPage(1);
+          }}
+          placeholder="Search by author"
+        />
+      </div>
       <Paginator
         page={page}
         totalPages={totalPages}
