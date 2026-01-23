@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Library } from "lucide-react";
 import { CreateBookDialog } from "@/components/CreateBookDialog";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function Header() {
     return (
@@ -12,7 +13,8 @@ export function Header() {
                 </div>
                 <p className="text-muted-foreground text-lg">Gerencie sua coleção de livros</p>
             </Link>
-            <div className="flex justify-end items-center">
+            <div className="flex justify-end items-center gap-4">
+                <ThemeToggle />
                 <CreateBookDialog />
             </div>
         </header>
