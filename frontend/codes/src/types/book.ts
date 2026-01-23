@@ -2,6 +2,10 @@ export interface Book {
     id: number;
     title: string;
     author: string;
+    synopsis?: string;
+    biography?: string;
+    authors?: string;
+    publisher?: string;
 }
 
 export type BooksResponse = {
