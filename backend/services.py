@@ -47,7 +47,7 @@ def serialize_book(book):
     }
 
 
-def search_books(title=None, author_name=None, subject=None, page=1, page_size=10):
+def search_books(title=None, author_name=None, subject=None, q=None, pubdate=None, page=1, page_size=10):
     """
     Função unificada para buscar livros por diferentes critérios.
     
@@ -55,6 +55,7 @@ def search_books(title=None, author_name=None, subject=None, page=1, page_size=1
         title: Busca por título (LIKE)
         author_name: Busca por nome do autor (LIKE)
         subject: Busca por subject (exact match)
+        q: Busca geral por título, autor ou data de publicação (OR LIKE)
         page: Número da página (padrão: 1)
         page_size: Itens por página (padrão: 10)
     
@@ -69,6 +70,11 @@ def search_books(title=None, author_name=None, subject=None, page=1, page_size=1
     params = []
     search_meta = {}
     
+    if q:
+        query += ' AND (title LIKE ? OR author LIKE ? OR pubdate LIKE ?)'
+        params.extend([f'%{q}%', f'%{q}%', f'%{q}%'])
+        search_meta['q'] = q
+    
     if title:
         query += ' AND title LIKE ?'
         params.append(f'%{title}%')
@@ -78,6 +84,11 @@ def search_books(title=None, author_name=None, subject=None, page=1, page_size=1
         query += ' AND author LIKE ?'
         params.append(f'%{author_name}%')
         search_meta['author_name'] = author_name
+    
+    if pubdate:
+        query += ' AND pubdate LIKE ?'
+        params.append(f'%{pubdate}%')
+        search_meta['pubdate'] = pubdate
     
     if subject:
         query += ' AND subjects = ?'

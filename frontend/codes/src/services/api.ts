@@ -14,7 +14,7 @@ export async function getBooks(page: number, pageSize: number): Promise<BooksRes
 }
 
 export async function searchBooks(
-    params: { title?: string; author?: string; subject?: string },
+    params: { title?: string; author?: string; subject?: string; general?: string; pubdate?: string },
     page: number,
     pageSize: number
 ): Promise<BooksResponse> {
@@ -22,6 +22,8 @@ export async function searchBooks(
     if (params.title) queryParams.set("title", params.title)
     if (params.author) queryParams.set("author_name", params.author)
     if (params.subject) queryParams.set("subject", params.subject)
+    if (params.general) queryParams.set("q", params.general)
+    if (params.pubdate) queryParams.set("pubdate", params.pubdate)
     queryParams.set("page", page.toString())
     queryParams.set("page_size", pageSize.toString())
 

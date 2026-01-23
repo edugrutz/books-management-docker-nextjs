@@ -25,6 +25,7 @@ export default function Home() {
   const debouncedAuthorSearchTerm = useDebounce(authorSearchTerm, 500);
 
   const [generalSearchTerm, setGeneralSearchTerm] = useState("");
+  const debouncedGeneralSearchTerm = useDebounce(generalSearchTerm, 500);
 
   const handlePageSizeChange = (newPageSize: number) => {
     setPageSize(newPageSize);
@@ -37,11 +38,12 @@ export default function Home() {
       try {
         let response;
 
-        if (debouncedTitleSearchTerm || debouncedAuthorSearchTerm) {
+        if (debouncedTitleSearchTerm || debouncedAuthorSearchTerm || debouncedGeneralSearchTerm) {
           response = await searchBooks(
             {
               title: debouncedTitleSearchTerm,
-              author: debouncedAuthorSearchTerm
+              author: debouncedAuthorSearchTerm,
+              general: debouncedGeneralSearchTerm
             },
             page,
             pageSize
@@ -60,7 +62,7 @@ export default function Home() {
     };
 
     fetchBooks();
-  }, [debouncedTitleSearchTerm, debouncedAuthorSearchTerm, page, pageSize]);
+  }, [debouncedTitleSearchTerm, debouncedAuthorSearchTerm, debouncedGeneralSearchTerm, page, pageSize]);
 
   const handleDelete = async (id: number) => {
     setBooks(prev => prev.filter(book => book.id !== id))
@@ -78,7 +80,7 @@ export default function Home() {
         general={generalSearchTerm}
         title={titleSearchTerm}
         author={authorSearchTerm}
-        onGeneralChange={setGeneralSearchTerm}
+        onGeneralChange={(val) => { setGeneralSearchTerm(val); setPage(1); }}
         onTitleChange={(val) => { setTitleSearchTerm(val); setPage(1); }}
         onAuthorChange={(val) => { setAuthorSearchTerm(val); setPage(1); }}
       />

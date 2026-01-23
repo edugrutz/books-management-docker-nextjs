@@ -76,6 +76,8 @@ def search_books_route():
     # Get the search term and pagination parameters
     title = request.args.get('title', default='', type=str)
     author_name = request.args.get('author_name', default='', type=str)
+    q = request.args.get('q', default='', type=str)
+    pubdate = request.args.get('pubdate', default='', type=str)
     page = request.args.get('page', default=1, type=int)
     page_size = request.args.get('page_size', default=10, type=int)
 
@@ -83,6 +85,8 @@ def search_books_route():
     return jsonify(search_books(
         title=title if title else None,
         author_name=author_name if author_name else None,
+        q=q if q else None,
+        pubdate=pubdate if pubdate else None,
         page=page,
         page_size=page_size
     ))
