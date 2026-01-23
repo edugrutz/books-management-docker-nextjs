@@ -56,6 +56,22 @@ def books_by_subject_slug(subject):
 def get_all_authors():
     return jsonify(get_authors())
 
+# GET /api/v1/books/search - busca livros por título
+
+
+@app.route('/api/v1/books/search', methods=['GET'])
+def search_books():
+    # Get the search term and pagination parameters
+    title = request.args.get('title', default='', type=str)
+    page = request.args.get('page', default=1, type=int)
+    page_size = request.args.get('page_size', default=10, type=int)
+
+    # Call the search function
+    result = search_books_by_title(title=title, page=page, page_size=page_size)
+
+    # Return the books as a JSON response with pagination metadata
+    return jsonify(result)
+
 # POST /api/v1/books - creates a new book
 
 
@@ -271,6 +287,55 @@ def delete_book_by_id(book_id):
     conn.close()
 
     return {'message': 'Book deleted successfully.'}, 200
+
+
+def search_books_by_title(title, page=1, page_size=10):
+    conn = sqlite3.connect('db.sqlite')
+    cursor = conn.cursor()
+
+    search_pattern = f'%{title}%'
+
+    cursor.execute('SELECT COUNT(*) FROM book WHERE title LIKE ?;', (search_pattern,))
+    total_count = cursor.fetchone()[0]
+
+    import math
+    total_pages = math.ceil(total_count / page_size) if total_count > 0 else 0
+
+    offset = (page - 1) * page_size
+
+    # Execute a SELECT query with search and pagination
+    cursor.execute(
+        'SELECT * FROM book WHERE title LIKE ? LIMIT ? OFFSET ?;',
+        (search_pattern, page_size, offset)
+    )
+    books = cursor.fetchall()
+
+    # Convert the books data to a list of dictionaries
+    book_list = []
+    for book in books:
+        book_dict = {
+            'id': book[0],
+            'title': book[1],
+            'author': book[2],
+            'biography': book[4]
+        }
+        book_list.append(book_dict)
+
+    conn.close()
+
+    # Return the books with pagination metadata
+    return {
+        'data': book_list,
+        'pagination': {
+            'page': page,
+            'page_size': page_size,
+            'total': total_count,
+            'total_pages': total_pages
+        },
+        'search': {
+            'term': title
+        }
+    }
 
 
 # # GET /api/v1/books
