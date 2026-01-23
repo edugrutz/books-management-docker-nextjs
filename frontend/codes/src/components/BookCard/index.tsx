@@ -3,10 +3,9 @@
 import { Book } from "@/types/book";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { deleteBookAction } from "@/actions/delete-book";
 import { Trash2 } from "lucide-react";
 
-export function BookCard({ book }: { book: Book }) {
+export function BookCard({ book, onDelete }: { book: Book, onDelete?: (id: number) => void }) {
     return (
         <Card className="flex flex-col justify-between">
             <CardHeader>
@@ -16,7 +15,7 @@ export function BookCard({ book }: { book: Book }) {
                 <p>{book.author}</p>
             </CardContent>
             <CardFooter>
-                <Button variant="destructive" onClick={() => deleteBookAction(book.id)}><Trash2 /></Button>
+                <Button variant="destructive" onClick={() => onDelete?.(book.id)}><Trash2 /></Button>
             </CardFooter>
         </Card>
     );

@@ -11,6 +11,7 @@ import { Book } from "@/types/book";
 import { SearchBar } from "@/components/SearchBar";
 import { searchBooks } from "@/services/api";
 import { useDebounce } from "@/hooks/useDebounce";
+import { deleteBookAction } from "@/actions/delete-book";
 
 export default function Home() {
 
@@ -51,6 +52,16 @@ export default function Home() {
     fetchBooks();
   }, [debouncedSearchTerm, page, pageSize]);
 
+  const handleDelete = async (id: number) => {
+    setBooks(prev => prev.filter(book => book.id !== id))
+
+    try {
+      await deleteBookAction(id)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <main className="p-6 flex flex-col gap-6">
       <div className="flex justify-end">
@@ -71,7 +82,7 @@ export default function Home() {
           </div>
         ) : books && books.length > 0 ? (
           books.map((book) => (
-            <BookCard key={book.id} book={book} />
+            <BookCard key={book.id} book={book} onDelete={() => handleDelete(book.id)} />
           ))
         ) : (
           <div className="col-span-full text-center text-muted-foreground">
