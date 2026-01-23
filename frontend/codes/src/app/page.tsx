@@ -81,6 +81,7 @@ export default function Home() {
             setPage(1);
           }}
           placeholder="Search by title"
+          className="flex-1"
         />
 
         <SearchBar
@@ -90,6 +91,7 @@ export default function Home() {
             setPage(1);
           }}
           placeholder="Search by author"
+          className="flex-1"
         />
       </div>
       <Paginator
