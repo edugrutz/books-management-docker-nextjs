@@ -2,14 +2,11 @@
 
 import { getBooks } from "@/services/api";
 import { BookCard } from "@/components/BookCard";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { Plus } from "lucide-react";
 import { Paginator } from "@/components/Paginator";
 import { useState, useEffect } from "react";
 import { Book } from "@/types/book";
-import { SearchBar } from "@/components/SearchBar";
-import { searchBooksByTitle, searchBooksByAuthorName } from "@/services/api";
+import { BookFilters } from "@/components/BookFilters";
+import { searchBooks } from "@/services/api";
 import { useDebounce } from "@/hooks/useDebounce";
 import { deleteBookAction } from "@/actions/delete-book";
 
@@ -27,6 +24,8 @@ export default function Home() {
   const [authorSearchTerm, setAuthorSearchTerm] = useState("");
   const debouncedAuthorSearchTerm = useDebounce(authorSearchTerm, 500);
 
+  const [generalSearchTerm, setGeneralSearchTerm] = useState("");
+
   const handlePageSizeChange = (newPageSize: number) => {
     setPageSize(newPageSize);
     setPage(1);
@@ -38,10 +37,15 @@ export default function Home() {
       try {
         let response;
 
-        if (debouncedTitleSearchTerm) {
-          response = await searchBooksByTitle(debouncedTitleSearchTerm, page, pageSize);
-        } else if (debouncedAuthorSearchTerm) {
-          response = await searchBooksByAuthorName(debouncedAuthorSearchTerm, page, pageSize);
+        if (debouncedTitleSearchTerm || debouncedAuthorSearchTerm) {
+          response = await searchBooks(
+            {
+              title: debouncedTitleSearchTerm,
+              author: debouncedAuthorSearchTerm
+            },
+            page,
+            pageSize
+          );
         } else {
           response = await getBooks(page, pageSize);
         }
@@ -69,31 +73,15 @@ export default function Home() {
   }
 
   return (
-    <main className="p-6 flex flex-col gap-6">
-      <div className="flex justify-end">
-        <Button asChild variant="default" ><Link href="/create"><Plus /> Add Book</Link></Button>
-      </div>
-      <div className="flex gap-4">
-        <SearchBar
-          onSearch={(value) => {
-            setTitleSearchTerm(value);
-            setAuthorSearchTerm("");
-            setPage(1);
-          }}
-          placeholder="Search by title"
-          className="flex-1"
-        />
-
-        <SearchBar
-          onSearch={(value) => {
-            setAuthorSearchTerm(value);
-            setTitleSearchTerm("");
-            setPage(1);
-          }}
-          placeholder="Search by author"
-          className="flex-1"
-        />
-      </div>
+    <main className="p-14 flex flex-col gap-6">
+      <BookFilters
+        general={generalSearchTerm}
+        title={titleSearchTerm}
+        author={authorSearchTerm}
+        onGeneralChange={setGeneralSearchTerm}
+        onTitleChange={(val) => { setTitleSearchTerm(val); setPage(1); }}
+        onAuthorChange={(val) => { setAuthorSearchTerm(val); setPage(1); }}
+      />
       <Paginator
         page={page}
         totalPages={totalPages}

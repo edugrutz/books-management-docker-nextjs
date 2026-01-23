@@ -1,7 +1,7 @@
 "use client"
 
 import { BookCardDialogProps } from "./types";
-import { Info, Calendar } from "lucide-react";
+import { Info, Book, User } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import {
     DialogContent,
@@ -13,10 +13,10 @@ import {
 export function BookCardDialog({ book }: BookCardDialogProps) {
     return (
         <DialogContent className="sm:max-w-4xl max-w-[95vw] max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-                <DialogTitle className="text-2xl font-bold tracking-tight">{book.title}</DialogTitle>
-                <DialogDescription className="text-lg font-medium text-primary/80">
-                    {book.author}
+            <DialogHeader className="gap-4">
+                <DialogTitle className="text-2xl font-bold tracking-tight flex items-center gap-2"><Book size={24} /> {book.title}</DialogTitle>
+                <DialogDescription className="text-lg font-medium text-primary/80 flex items-center gap-2">
+                    <User size={24} /> {book.author}
                 </DialogDescription>
             </DialogHeader>
             <div className="grid gap-6 py-4">

@@ -15,7 +15,7 @@ export function BookCard({ book, onDelete }: { book: Book, onDelete?: (id: numbe
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Card className="flex flex-col justify-between cursor-pointer hover:bg-accent/5 transition-colors h-full group">
+                <Card className="flex flex-col justify-between cursor-pointer hover:bg-accent/5 transition-colors h-full group cursor-pointer transition-all hover:shadow-lg hover:scale-[1.02]">
                     <CardHeader>
                         <CardTitle className="line-clamp-2 group-hover:text-primary transition-colors flex items-start justify-between">
                             <span className="line-clamp-2">{book.title}</span>
@@ -44,6 +44,6 @@ export function BookCard({ book, onDelete }: { book: Book, onDelete?: (id: numbe
                 </Card>
             </DialogTrigger>
             <BookCardDialog book={book} />
-        </Dialog>
+        </Dialog >
     );
 }

@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { Library } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { BookPlus } from "lucide-react";
 
 export function Header() {
     return (
-        <header className="p-8">
+        <header className="pt-12 px-14 flex justify-between">
             <Link href="/" className="inline-block hover:opacity-80 transition-opacity">
                 <div className="flex items-center gap-2">
                     <Library size={32} />
@@ -11,6 +13,9 @@ export function Header() {
                 </div>
                 <p className="text-muted-foreground text-lg">Gerencie sua coleção de livros</p>
             </Link>
+            <div className="flex justify-end items-center">
+                <Button asChild variant="default" size="lg"><Link href="/create"><BookPlus /> Add Book</Link></Button>
+            </div>
         </header>
     );
 }
