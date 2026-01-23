@@ -36,11 +36,6 @@ export function BookCard({ book, onDelete }: { book: Book, onDelete?: (id: numbe
                         <p className="text-muted-foreground line-clamp-1 flex items-center gap-2"><User size={14} />{book.author}</p>
                         <p className="line-clamp-1 flex items-center gap-2"><Calendar size={14} />{formatDate(book.pubdate)}</p>
                     </CardContent>
-                    <CardFooter className="flex justify-between items-center mt-auto">
-                        <div className="text-xs text-muted-foreground flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
-                            <Info size={14} /> Clique para detalhes
-                        </div>
-                    </CardFooter>
                 </Card>
             </DialogTrigger>
             <BookCardDialog book={book} />
