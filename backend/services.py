@@ -278,6 +278,11 @@ def create_new_book(book_data):
         conn = get_connection()
         cursor = conn.cursor()
         
+        # Gerar novo ID manualmente (tabela não tem PK/AutoIncrement)
+        cursor.execute('SELECT MAX(id) FROM book;')
+        max_id = cursor.fetchone()[0] or 0
+        new_id = max_id + 1
+        
         author = str(book_data['author']).strip()
         
         # Extrai campos opcionais (usa string vazia se não fornecido)
@@ -289,14 +294,24 @@ def create_new_book(book_data):
         
         # Execute a query to create a new book
         cursor.execute(
-            'INSERT INTO book (title, author, author_slug, author_bio, authors, publisher, synopsis) VALUES (?, ?, ?, ?, ?, ?, ?);',
-            (title, author, author_slug, author_bio, authors, publisher, synopsis)
+            'INSERT INTO book (id, title, author, author_slug, author_bio, authors, publisher, synopsis) VALUES (?, ?, ?, ?, ?, ?, ?, ?);',
+            (new_id, title, author, author_slug, author_bio, authors, publisher, synopsis)
         )
         
         conn.commit()
+        
+        # Buscar o livro recém-criado pelo ID gerado
+        cursor.execute('SELECT * FROM book WHERE id = ?;', (new_id,))
+        created_book = cursor.fetchone()
+        
         conn.close()
         
-        return success_response(data=None, meta={'message': 'Book created successfully.'}), 201
+        if not created_book:
+            return error_response('Erro ao recuperar o livro criado', 500)
+        
+        book_dict = serialize_book(created_book)
+        
+        return success_response(data=book_dict, meta={'message': 'Book created successfully.'}), 201
         
     except sqlite3.Error as e:
         return error_response(f'Erro no banco de dados: {str(e)}', 500)
