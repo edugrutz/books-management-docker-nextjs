@@ -40,9 +40,11 @@ export function BookList({ initialBooks }: BookListProps) {
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {books.map((book) => (
-                <BookCard key={book.id} book={book} onDelete={() => handleDelete(book.id)} />
-            ))}
+            {books
+                .filter((book) => book.id !== null && book.id !== undefined)
+                .map((book) => (
+                    <BookCard key={book.id} book={book} onDelete={() => handleDelete(book.id)} />
+                ))}
         </div>
     );
 }
