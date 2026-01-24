@@ -23,6 +23,7 @@ export function DeleteBookConfirm({ bookId, bookTitle }: DeleteBookConfirmProps)
     const [isDeleting, setIsDeleting] = useState(false)
     const t_toast = useTranslations('toast')
     const t_confirm = useTranslations('confirm')
+    const t_actions = useTranslations('actions')
 
     const handleDelete = async () => {
         setIsDeleting(true)
@@ -45,6 +46,7 @@ export function DeleteBookConfirm({ bookId, bookTitle }: DeleteBookConfirmProps)
                     size="icon"
                     className="h-8 w-8 hover:bg-destructive hover:text-white"
                     disabled={isDeleting}
+                    aria-label={t_actions('delete')}
                     onClick={(e) => e.stopPropagation()}
                 >
                     {isDeleting ? (

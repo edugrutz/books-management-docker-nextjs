@@ -17,6 +17,7 @@ export function EditBookButton({ book }: EditBookButtonProps) {
                     variant="ghost"
                     size="icon"
                     className="h-8 w-8 hover:bg-primary hover:text-white"
+                    aria-label="Editar"
                     onClick={(e) => e.stopPropagation()}
                 >
                     <Pencil size={16} />
