@@ -88,7 +88,7 @@ export default function Home() {
   }
 
   return (
-    <main className="p-14 flex flex-col gap-6">
+    <main className="lg:p-14 md:p-12 p-10 flex flex-col gap-6">
       <BookFilters
         general={generalSearchTerm}
         title={titleSearchTerm}
@@ -104,6 +104,7 @@ export default function Home() {
         totalItems={totalItems}
         onPageChange={setPage}
         onPageSizeChange={handlePageSizeChange}
+        showCompact={true}
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         {loading ? (
@@ -120,6 +121,19 @@ export default function Home() {
           </div>
         )}
       </div>
+      {pageSize >= 25 && (
+        <Paginator
+          page={page}
+          totalPages={totalPages}
+          pageSize={pageSize}
+          totalItems={totalItems}
+          onPageChange={setPage}
+          onPageSizeChange={handlePageSizeChange}
+          showNumeric={false}
+          showCompact={true}
+          showPageSize={false}
+        />
+      )}
     </main>
   );
 }

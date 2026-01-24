@@ -5,4 +5,7 @@ export type PaginatorProps = {
     totalItems: number
     onPageChange: (page: number) => void
     onPageSizeChange: (pageSize: number) => void
+    showNumeric?: boolean
+    showPageSize?: boolean
+    showCompact?: boolean
 }
