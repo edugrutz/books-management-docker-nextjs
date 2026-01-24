@@ -38,6 +38,7 @@ export function Paginator({
     const router = useRouter()
     const pathname = usePathname()
     const searchParams = useSearchParams()
+    const PAGE_SIZES = [10, 25, 50, 100]
 
     const updateUrl = (paramsUpdate: Record<string, string>) => {
         const params = new URLSearchParams(searchParams)
@@ -110,10 +111,11 @@ export function Paginator({
                         </SelectTrigger>
                         <SelectContent align="start">
                             <SelectGroup>
-                                <SelectItem value="10">10</SelectItem>
-                                <SelectItem value="25">25</SelectItem>
-                                <SelectItem value="50">50</SelectItem>
-                                <SelectItem value="100">100</SelectItem>
+                                {PAGE_SIZES.map((size) => (
+                                    <SelectItem key={size} value={size.toString()}>
+                                        {size}
+                                    </SelectItem>
+                                ))}
                             </SelectGroup>
                         </SelectContent>
                     </Select>

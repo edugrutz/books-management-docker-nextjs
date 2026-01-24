@@ -1,7 +1,6 @@
-import { Book } from "@/types/book"
 import { BooksResponse } from "@/types/book"
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL
+const API_URL = process.env.API_URL
 
 export async function getBooks(page: number, pageSize: number): Promise<BooksResponse> {
     const res = await fetch(`${API_URL}/api/v1/books?page=${page}&page_size=${pageSize}`, {
@@ -21,11 +20,14 @@ export async function searchBooks(
     pageSize: number
 ): Promise<BooksResponse> {
     const queryParams = new URLSearchParams()
-    if (params.title) queryParams.set("title", params.title)
-    if (params.author) queryParams.set("author_name", params.author)
-    if (params.subject) queryParams.set("subject", params.subject)
-    if (params.general) queryParams.set("q", params.general)
-    if (params.pubdate) queryParams.set("pubdate", params.pubdate)
+    Object.entries(params).forEach(([key, value]) => {
+        if (!value) return
+        const map: Record<string, string> = {
+            author: "author_name",
+            general: "q",
+        }
+        queryParams.set(map[key] ?? key, value)
+    })
     queryParams.set("page", page.toString())
     queryParams.set("page_size", pageSize.toString())
 

@@ -1,6 +1,10 @@
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { BookFilters } from "@/types/filters";
 
+/**
+ * Custom hook para gerenciar filtros de livros
+ * @returns Objeto com filtros atuais e função para atualizar filtros
+ */
 export function useBookFilters() {
     const router = useRouter();
     const pathname = usePathname();

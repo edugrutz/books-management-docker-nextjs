@@ -3,15 +3,16 @@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { usePathname, useRouter } from "@/i18n/routing";
 import { useLocale } from "next-intl";
+import { Locale } from "./types";
 
 export function LanguageToggle() {
     const locale = useLocale();
     const router = useRouter();
     const pathname = usePathname();
 
-    const handleLanguageChange = (value: string) => {
+    const handleLanguageChange = (value: Locale) => {
         if (value && value !== locale) {
-            router.replace(pathname, { locale: value as any });
+            router.replace(pathname, { locale: value });
         }
     };
 
