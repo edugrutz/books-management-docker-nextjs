@@ -3,7 +3,6 @@ import { BookCardSkeleton } from "@/components/books/BookCardSkeleton";
 export default function Loading() {
     return (
         <main className="lg:p-14 md:p-12 p-10 flex flex-col gap-6">
-            {/* Simula a estrutura dos filtros e paginação para evitar layout shift */}
             <div className="flex flex-col gap-4 w-full h-[180px] bg-muted/10 rounded-lg animate-pulse" />
 
             <div className="flex justify-between items-center">

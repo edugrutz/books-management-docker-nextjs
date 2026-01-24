@@ -1,20 +1,10 @@
-import { getBooks } from "@/services/api";
-import { Paginator } from "@/components/Paginator";
+import { getBooks, searchBooks } from "@/services/api";
 import { BookFilters } from "@/components/books/BookFilters";
-import { searchBooks } from "@/services/api";
 import { BookList } from "@/components/books/BookList";
+import { Paginator } from "@/components/Paginator";
+import { MIN_PAGE_SIZE_FOR_DOUBLE_PAGINATOR } from "@/constants/pagination";
 import { setRequestLocale } from 'next-intl/server';
-
-interface HomeProps {
-  params: Promise<{ locale: string }>;
-  searchParams: Promise<{
-    page?: string;
-    page_size?: string;
-    q?: string;
-    title?: string;
-    author_name?: string;
-  }>;
-}
+import { HomeProps } from "@/types/routing";
 
 export default async function Home({ params, searchParams }: HomeProps) {
   const { locale } = await params;
@@ -47,28 +37,30 @@ export default async function Home({ params, searchParams }: HomeProps) {
   const totalPages = response.meta.pagination.total_pages;
   const totalItems = response.meta.pagination.total;
 
+  const paginatorProps = {
+    page,
+    totalPages,
+    pageSize,
+    totalItems,
+  };
+
   return (
     <main className="lg:p-14 md:p-12 p-10 flex flex-col gap-6">
       <BookFilters />
-      <Paginator
-        page={page}
-        totalPages={totalPages}
-        pageSize={pageSize}
-        totalItems={totalItems}
-        showCompact={true}
+      <BookList
+        books={books}
+        headerSlot={<Paginator {...paginatorProps} showCompact={true} />}
+        footerSlot={
+          pageSize >= MIN_PAGE_SIZE_FOR_DOUBLE_PAGINATOR ? (
+            <Paginator
+              {...paginatorProps}
+              showNumeric={false}
+              showCompact={true}
+              showPageSize={false}
+            />
+          ) : null
+        }
       />
-      <BookList initialBooks={books} />
-      {pageSize >= 25 && (
-        <Paginator
-          page={page}
-          totalPages={totalPages}
-          pageSize={pageSize}
-          totalItems={totalItems}
-          showNumeric={false}
-          showCompact={true}
-          showPageSize={false}
-        />
-      )}
     </main>
   );
 }
