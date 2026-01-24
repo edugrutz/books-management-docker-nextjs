@@ -3,7 +3,7 @@
 import { Book } from "@/types/book";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Trash2, Info, User, Calendar, Pencil, BookOpen } from "lucide-react";
+import { Trash2, User, Calendar, Pencil, BookOpen } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { useState } from "react";
 import {
@@ -11,8 +11,10 @@ import {
 } from "@/components/ui/dialog";
 import { BookCardDialog } from "../BookCardDialog";
 import { BookEditDialog } from "../BookEditDialog";
+import { useTranslations } from "next-intl";
 
 export function BookCard({ book, onDelete }: { book: Book, onDelete?: (id: number) => void }) {
+    const t = useTranslations('book');
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
     const [isEditOpen, setIsEditOpen] = useState(false);
 
@@ -53,11 +55,19 @@ export function BookCard({ book, onDelete }: { book: Book, onDelete?: (id: numbe
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <p className="text-muted-foreground line-clamp-1 flex items-center gap-2"><User size={14} />{book.author}</p>
-                    <p className="line-clamp-1 flex items-center gap-2"><Calendar size={14} />{formatDate(book.pubdate)}</p>
+                    <p className="text-muted-foreground line-clamp-1 flex items-center gap-2 font-medium bg-muted/20 p-2 rounded-md mb-2">
+                        <User size={14} className="text-primary" /> {book.author}
+                    </p>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
+                        <Calendar size={14} />
+                        <span>{formatDate(book.pubdate)}</span>
+                    </div>
                 </CardContent>
-                <CardFooter className="flex items-center justify-end">
-                    <p className="text-muted-foreground line-clamp-1 flex items-center gap-2"><BookOpen size={14} />{book.pages}</p>
+                <CardFooter className="flex items-center justify-end border-t border-muted/20 pt-4 mt-auto">
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground px-2 py-1 bg-secondary rounded-full">
+                        <BookOpen size={14} />
+                        <span>{book.pages} {t('pages')}</span>
+                    </div>
                 </CardFooter>
             </Card>
 

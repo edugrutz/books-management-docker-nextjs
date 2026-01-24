@@ -1,11 +1,12 @@
 import { getBooks } from "@/services/api";
-import { BookCard } from "@/components/BookCard";
 import { Paginator } from "@/components/Paginator";
 import { BookFilters } from "@/components/BookFilters";
 import { searchBooks } from "@/services/api";
 import { BookList } from "@/components/BookList";
+import { setRequestLocale } from 'next-intl/server';
 
 interface HomeProps {
+  params: Promise<{ locale: string }>;
   searchParams: Promise<{
     page?: string;
     page_size?: string;
@@ -15,13 +16,16 @@ interface HomeProps {
   }>;
 }
 
-export default async function Home({ searchParams }: HomeProps) {
-  const params = await searchParams;
-  const page = Number(params.page) || 1;
-  const pageSize = Number(params.page_size) || 10;
-  const q = params.q || "";
-  const title = params.title || "";
-  const author = params.author_name || "";
+export default async function Home({ params, searchParams }: HomeProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  const queryParams = await searchParams;
+  const page = Number(queryParams.page) || 1;
+  const pageSize = Number(queryParams.page_size) || 10;
+  const q = queryParams.q || "";
+  const title = queryParams.title || "";
+  const author = queryParams.author_name || "";
 
   let response;
 

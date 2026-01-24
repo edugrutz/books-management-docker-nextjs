@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Field, FieldLabel, FieldContent } from "@/components/ui/field";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { updateBookAction } from "@/actions/update-book";
 import { Pencil } from "lucide-react";
 import { stripHtml } from "@/lib/utils";
@@ -24,7 +24,9 @@ interface BookEditDialogProps {
 }
 
 export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
-    const { t } = useTranslation();
+    const t_book = useTranslations('book');
+    const t_actions = useTranslations('actions');
+
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         title: book.title,
@@ -52,16 +54,16 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
         <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
                 <DialogTitle className="flex items-center gap-2">
-                    <Pencil size={20} /> {t('book.edit_book_title')}
+                    <Pencil size={20} /> {t_book('edit_book_title')}
                 </DialogTitle>
                 <DialogDescription>
-                    {t('book.edit_book_desc')}
+                    {t_book('edit_book_desc')}
                 </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4 py-4">
                 <div className="grid grid-cols-1 gap-4">
                     <Field>
-                        <FieldLabel>{t('book.title_label')}</FieldLabel>
+                        <FieldLabel>{t_book('title_label')}</FieldLabel>
                         <FieldContent>
                             <Input
                                 value={formData.title}
@@ -72,7 +74,7 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
                     </Field>
 
                     <Field>
-                        <FieldLabel>{t('book.author_label')}</FieldLabel>
+                        <FieldLabel>{t_book('author_label')}</FieldLabel>
                         <FieldContent>
                             <Input
                                 value={formData.author}
@@ -84,7 +86,7 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
 
                     <div className="grid grid-cols-2 gap-4">
                         <Field>
-                            <FieldLabel>{t('book.publisher')}</FieldLabel>
+                            <FieldLabel>{t_book('publisher')}</FieldLabel>
                             <FieldContent>
                                 <Input
                                     value={formData.publisher}
@@ -94,7 +96,7 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
                         </Field>
 
                         <Field>
-                            <FieldLabel>{t('book.pubdate')}</FieldLabel>
+                            <FieldLabel>{t_book('pubdate')}</FieldLabel>
                             <FieldContent>
                                 <Input
                                     value={formData.pubdate}
@@ -104,7 +106,7 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
                         </Field>
 
                         <Field>
-                            <FieldLabel>{t('book.pages')}</FieldLabel>
+                            <FieldLabel>{t_book('pages')}</FieldLabel>
                             <FieldContent>
                                 <Input
                                     type="number"
@@ -121,7 +123,7 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
                     </div>
 
                     <Field>
-                        <FieldLabel>{t('book.synopsis')}</FieldLabel>
+                        <FieldLabel>{t_book('synopsis')}</FieldLabel>
                         <FieldContent>
                             <Textarea
                                 value={formData.synopsis}
@@ -134,7 +136,7 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
                 </div>
                 <DialogFooter>
                     <Button type="submit" disabled={loading}>
-                        {loading ? t('actions.saving') : t('actions.save')}
+                        {loading ? t_actions('saving') : t_actions('save')}
                     </Button>
                 </DialogFooter>
             </form>

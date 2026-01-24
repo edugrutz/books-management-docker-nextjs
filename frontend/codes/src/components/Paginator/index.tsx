@@ -22,7 +22,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-import { useTranslation } from "react-i18next"
+import { useTranslations } from "next-intl"
 import { useRouter, useSearchParams, usePathname } from "next/navigation"
 
 export function Paginator({
@@ -34,7 +34,7 @@ export function Paginator({
     showPageSize = true,
     showCompact = false
 }: PaginatorProps) {
-    const { t } = useTranslation()
+    const t = useTranslations('actions')
     const router = useRouter()
     const pathname = usePathname()
     const searchParams = useSearchParams()
@@ -100,7 +100,7 @@ export function Paginator({
         <div className={`flex flex-col sm:flex-row items-center gap-4 ${(!showPageSize || showNumeric) ? "sm:justify-center" : "sm:justify-between"}`}>
             {showPageSize && (
                 <Field orientation="horizontal" className="w-fit">
-                    <FieldLabel htmlFor="select-rows-per-page">{t('actions.rows_per_page')}</FieldLabel>
+                    <FieldLabel htmlFor="select-rows-per-page">{t('rows_per_page')}</FieldLabel>
                     <Select
                         value={pageSize.toString()}
                         onValueChange={handlePageSizeChange}
@@ -117,7 +117,7 @@ export function Paginator({
                             </SelectGroup>
                         </SelectContent>
                     </Select>
-                    <p className="text-xs">{t('actions.total_items')} {totalItems} {t('actions.items')}</p>
+                    <p className="text-xs">{t('total_items')} {totalItems} {t('items')}</p>
                 </Field>
             )}
 
@@ -151,7 +151,7 @@ export function Paginator({
                     {showCompact && !showNumeric && (
                         <PaginationItem>
                             <span className="text-sm font-medium px-2">
-                                {t('actions.page_info', { page, total: totalPages })}
+                                {t('page_info', { page, total: totalPages })}
                             </span>
                         </PaginationItem>
                     )}

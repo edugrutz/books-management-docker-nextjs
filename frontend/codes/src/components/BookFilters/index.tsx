@@ -3,7 +3,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Search, User, Layers, X } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -16,7 +16,7 @@ interface BookFiltersProps {
 export function BookFilters({
     className
 }: BookFiltersProps) {
-    const { t } = useTranslation();
+    const t = useTranslations('filters');
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -56,13 +56,13 @@ export function BookFilters({
         <div className={`flex flex-col gap-4 w-full ${className}`}>
             <div className="flex flex-col gap-1.5 w-full">
                 <Label htmlFor="search-general" className="text-[10px] font-bold uppercase text-muted-foreground ml-1">
-                    {t('filters.general')}
+                    {t('general')}
                 </Label>
                 <div className="relative group">
                     <Layers className="absolute left-3 top-2.5 text-muted-foreground" size={16} />
                     <Input
                         id="search-general"
-                        placeholder={t('filters.placeholder_general')}
+                        placeholder={t('placeholder_general')}
                         value={general}
                         onChange={(e) => setGeneral(e.target.value)}
                         className="pl-10 pr-10 bg-secondary"
@@ -82,13 +82,13 @@ export function BookFilters({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1.5">
                     <Label htmlFor="search-title" className="text-[10px] font-bold uppercase text-muted-foreground ml-1">
-                        {t('filters.title')}
+                        {t('title')}
                     </Label>
                     <div className="relative">
                         <Search className="absolute left-3 top-2.5 text-muted-foreground" size={16} />
                         <Input
                             id="search-title"
-                            placeholder={t('filters.placeholder_title')}
+                            placeholder={t('placeholder_title')}
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                             className="pl-10 pr-10 bg-secondary"
@@ -107,13 +107,13 @@ export function BookFilters({
                 </div>
                 <div className="flex flex-col gap-1.5">
                     <Label htmlFor="search-author" className="text-[10px] font-bold uppercase text-muted-foreground ml-1">
-                        {t('filters.author')}
+                        {t('author')}
                     </Label>
                     <div className="relative">
                         <User className="absolute left-3 top-2.5 text-muted-foreground" size={16} />
                         <Input
                             id="search-author"
-                            placeholder={t('filters.placeholder_author')}
+                            placeholder={t('placeholder_author')}
                             value={author}
                             onChange={(e) => setAuthor(e.target.value)}
                             className="pl-10 pr-10 bg-secondary"

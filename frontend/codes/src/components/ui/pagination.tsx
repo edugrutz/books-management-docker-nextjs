@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import {
   ChevronLeftIcon,
@@ -10,14 +12,14 @@ import {
 import { cn } from "@/lib/utils"
 import { buttonVariants, type Button } from "@/components/ui/button"
 
-import { useTranslation } from "react-i18next"
+import { useTranslations } from "next-intl"
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
-  const { t } = useTranslation()
+  const t = useTranslations('actions')
   return (
     <nav
       role="navigation"
-      aria-label={t('pagination.label', 'pagination')}
+      aria-label="pagination"
       data-slot="pagination"
       className={cn("mx-auto flex w-full justify-center", className)}
       {...props}
@@ -74,10 +76,10 @@ function PaginationPrevious({
   className,
   ...props
 }: React.ComponentProps<typeof PaginationLink>) {
-  const { t } = useTranslation()
+  const t = useTranslations('actions')
   return (
     <PaginationLink
-      aria-label={t('actions.previous')}
+      aria-label={t('previous')}
       size="default"
       className={cn("gap-1 px-2.5 sm:pl-2.5", className)}
       {...props}
@@ -91,10 +93,10 @@ function PaginationNext({
   className,
   ...props
 }: React.ComponentProps<typeof PaginationLink>) {
-  const { t } = useTranslation()
+  const t = useTranslations('actions')
   return (
     <PaginationLink
-      aria-label={t('actions.next')}
+      aria-label={t('next')}
       size="default"
       className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
       {...props}
@@ -125,10 +127,10 @@ function PaginationFirst({
   className,
   ...props
 }: React.ComponentProps<typeof PaginationLink>) {
-  const { t } = useTranslation()
+  const t = useTranslations('actions')
   return (
     <PaginationLink
-      aria-label={t('actions.first', 'First')}
+      aria-label="First"
       size="icon"
       className={cn("", className)}
       {...props}
@@ -142,10 +144,10 @@ function PaginationLast({
   className,
   ...props
 }: React.ComponentProps<typeof PaginationLink>) {
-  const { t } = useTranslation()
+  const t = useTranslations('actions')
   return (
     <PaginationLink
-      aria-label={t('actions.last', 'Last')}
+      aria-label="Last"
       size="icon"
       className={cn("", className)}
       {...props}

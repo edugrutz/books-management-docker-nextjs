@@ -1,22 +1,24 @@
 "use client";
 
-import { useTranslation } from "react-i18next";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import "@/lib/i18n";
+import { usePathname, useRouter } from "@/i18n/routing";
+import { useLocale } from "next-intl";
 
 export function LanguageToggle() {
-    const { i18n } = useTranslation();
+    const locale = useLocale();
+    const router = useRouter();
+    const pathname = usePathname();
 
     const handleLanguageChange = (value: string) => {
-        if (value) {
-            i18n.changeLanguage(value);
+        if (value && value !== locale) {
+            router.replace(pathname, { locale: value as any });
         }
     };
 
     return (
         <ToggleGroup
             type="single"
-            value={i18n.language?.substring(0, 2) || "pt"}
+            value={locale}
             onValueChange={handleLanguageChange}
             variant="outline"
             className="p-2 bg-background"

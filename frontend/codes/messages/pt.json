@@ -14,7 +14,7 @@
         "previous": "Anterior",
         "next": "Próximo",
         "total_items": "Total de",
-        "page_info": "{{page}} de {{total}}",
+        "page_info": "{page} de {total}",
         "items": "livros cadastrados",
         "edit": "Editar",
         "save": "Salvar Alterações",
