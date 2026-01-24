@@ -15,7 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Field, FieldLabel, FieldContent } from "@/components/ui/field";
 import { useTranslations } from "next-intl";
 import { updateBookAction } from "@/actions/update-book";
-import { Pencil } from "lucide-react";
+import { Pencil, Loader2 } from "lucide-react";
 import { stripHtml } from "@/lib/utils";
 
 interface BookEditDialogProps {
@@ -69,6 +69,7 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
                                 value={formData.title}
                                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                                 required
+                                disabled={loading}
                             />
                         </FieldContent>
                     </Field>
@@ -80,6 +81,7 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
                                 value={formData.author}
                                 onChange={(e) => setFormData({ ...formData, author: e.target.value })}
                                 required
+                                disabled={loading}
                             />
                         </FieldContent>
                     </Field>
@@ -91,6 +93,7 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
                                 <Input
                                     value={formData.publisher}
                                     onChange={(e) => setFormData({ ...formData, publisher: e.target.value })}
+                                    disabled={loading}
                                 />
                             </FieldContent>
                         </Field>
@@ -101,6 +104,7 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
                                 <Input
                                     value={formData.pubdate}
                                     onChange={(e) => setFormData({ ...formData, pubdate: e.target.value })}
+                                    disabled={loading}
                                 />
                             </FieldContent>
                         </Field>
@@ -117,6 +121,7 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
                                     }}
                                     min="0"
                                     max="1000000"
+                                    disabled={loading}
                                 />
                             </FieldContent>
                         </Field>
@@ -129,6 +134,7 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
                                 value={formData.synopsis}
                                 onChange={(e) => setFormData({ ...formData, synopsis: e.target.value })}
                                 rows={5}
+                                disabled={loading}
                             />
                         </FieldContent>
                     </Field>
@@ -136,7 +142,14 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
                 </div>
                 <DialogFooter>
                     <Button type="submit" disabled={loading}>
-                        {loading ? t_actions('saving') : t_actions('save')}
+                        {loading ? (
+                            <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                {t_actions('saving')}
+                            </>
+                        ) : (
+                            t_actions('save')
+                        )}
                     </Button>
                 </DialogFooter>
             </form>

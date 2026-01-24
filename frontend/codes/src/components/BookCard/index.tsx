@@ -3,7 +3,7 @@
 import { Book } from "@/types/book";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Trash2, User, Calendar, Pencil, BookOpen } from "lucide-react";
+import { Trash2, User, Calendar, Pencil, BookOpen, Loader2 } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { useState } from "react";
 import {
@@ -13,7 +13,15 @@ import { BookCardDialog } from "../BookCardDialog";
 import { BookEditDialog } from "../BookEditDialog";
 import { useTranslations } from "next-intl";
 
-export function BookCard({ book, onDelete }: { book: Book, onDelete?: (id: number) => void }) {
+export function BookCard({
+    book,
+    onDelete,
+    isDeleting = false
+}: {
+    book: Book;
+    onDelete?: (id: number) => void;
+    isDeleting?: boolean;
+}) {
     const t = useTranslations('book');
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
     const [isEditOpen, setIsEditOpen] = useState(false);
@@ -21,8 +29,8 @@ export function BookCard({ book, onDelete }: { book: Book, onDelete?: (id: numbe
     return (
         <>
             <Card
-                className="flex flex-col justify-between cursor-pointer hover:bg-accent/5 transition-colors h-full group transition-all hover:shadow-lg hover:scale-[1.02]"
-                onClick={() => setIsDetailsOpen(true)}
+                className={`flex flex-col justify-between cursor-pointer hover:bg-accent/5 transition-colors h-full group transition-all hover:shadow-lg hover:scale-[1.02] ${isDeleting ? 'opacity-50 pointer-events-none' : ''}`}
+                onClick={() => !isDeleting && setIsDetailsOpen(true)}
             >
                 <CardHeader>
                     <CardTitle className="line-clamp-2 group-hover:text-primary transition-colors flex items-start justify-between">
@@ -36,6 +44,7 @@ export function BookCard({ book, onDelete }: { book: Book, onDelete?: (id: numbe
                                     e.stopPropagation();
                                     setIsEditOpen(true);
                                 }}
+                                disabled={isDeleting}
                             >
                                 <Pencil size={16} />
                             </Button>
@@ -48,8 +57,13 @@ export function BookCard({ book, onDelete }: { book: Book, onDelete?: (id: numbe
                                     e.stopPropagation();
                                     onDelete?.(book.id);
                                 }}
+                                disabled={isDeleting}
                             >
-                                <Trash2 size={16} />
+                                {isDeleting ? (
+                                    <Loader2 size={16} className="animate-spin" />
+                                ) : (
+                                    <Trash2 size={16} />
+                                )}
                             </Button>
                         </div>
                     </CardTitle>
