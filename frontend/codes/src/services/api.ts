@@ -13,6 +13,22 @@ export async function getBooks(page: number, pageSize: number): Promise<BooksRes
     return res.json()
 }
 
+export async function updateBook(id: number, data: Partial<Book>): Promise<{ data: Book; meta: any }> {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/books/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+
+    if (!res.ok) {
+        throw new Error("Erro ao atualizar livro")
+    }
+
+    return res.json()
+}
+
 export async function searchBooks(
     params: { title?: string; author?: string; subject?: string; general?: string; pubdate?: string },
     page: number,

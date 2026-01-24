@@ -14,7 +14,10 @@
         "previous": "Previous",
         "next": "Next",
         "total_items": "Total of",
-        "items": "books registered"
+        "items": "books registered",
+        "edit": "Edit",
+        "save": "Save Changes",
+        "saving": "Saving..."
     },
     "filters": {
         "general": "General search",
@@ -35,6 +38,8 @@
         "new_book_title": "Create new book",
         "new_book_desc": "Fill in the fields below to add a new book to your library.",
         "other_authors": "Other Authors",
-        "about_author": "About the Author"
+        "about_author": "About the Author",
+        "edit_book_title": "Edit Book",
+        "edit_book_desc": "Update the book details below."
     }
 }

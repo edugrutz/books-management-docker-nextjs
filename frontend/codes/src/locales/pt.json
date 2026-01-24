@@ -14,7 +14,10 @@
         "previous": "Anterior",
         "next": "Próximo",
         "total_items": "Total de",
-        "items": "livros cadastrados"
+        "items": "livros cadastrados",
+        "edit": "Editar",
+        "save": "Salvar Alterações",
+        "saving": "Salvando..."
     },
     "filters": {
         "general": "Busca geral",
@@ -35,6 +38,8 @@
         "new_book_title": "Criar novo livro",
         "new_book_desc": "Preencha os campos abaixo para adicionar um novo livro à sua biblioteca.",
         "other_authors": "Outros Autores",
-        "about_author": "Sobre o Autor"
+        "about_author": "Sobre o Autor",
+        "edit_book_title": "Editar Livro",
+        "edit_book_desc": "Atualize os detalhes do livro abaixo."
     }
 }

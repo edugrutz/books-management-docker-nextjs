@@ -18,3 +18,8 @@ export function formatDate(dateStr?: string) {
     timeZone: "UTC"
   });
 }
+
+export function stripHtml(html?: string) {
+  if (!html) return "";
+  return html.replace(/<[^>]*>?/gm, "").trim();
+}
