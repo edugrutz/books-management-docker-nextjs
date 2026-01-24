@@ -152,4 +152,4 @@ As melhorias abaixo foram mapeadas para elevar a maturidade técnica do projeto:
 
 Links para especificações técnicas de cada módulo:
 - [Documentação do Backend](backend/README.md)
-- [Documentação do Frontend](frontend/codes/README.md)
+- [Documentação do Frontend](frontend/README.md)
