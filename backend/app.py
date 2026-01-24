@@ -12,8 +12,18 @@ app.register_blueprint(books_bp)
 app.register_blueprint(authors_bp)
 
 @app.route("/", methods=["GET"])
-def hello_world():
-    return "Hello, World!"
+def index():
+    return jsonify({
+        "name": "Books Management API",
+        "version": "1.0.0",
+        "status": "online",
+        "repository": "https://github.com/edugrutz/books-management-docker-nextjs",
+        "endpoints": {
+            "books": "/api/v1/books",
+            "authors": "/api/v1/authors",
+            "health": "/health"
+        }
+    })
 
 @app.route("/health", methods=["GET"])
 def health_check():
