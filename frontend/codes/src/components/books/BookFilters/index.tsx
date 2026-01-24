@@ -5,9 +5,9 @@ import { Label } from "@/components/ui/label";
 import { Search, User, Layers, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
+import { useBookFilters } from "@/hooks/useBookFilters";
 
 interface BookFiltersProps {
     className?: string;
@@ -17,40 +17,29 @@ export function BookFilters({
     className
 }: BookFiltersProps) {
     const t = useTranslations('filters');
-    const router = useRouter();
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
+    const { q, title: urlTitle, author: urlAuthor, setFilters } = useBookFilters();
 
-    const [general, setGeneral] = useState(searchParams.get("q") || "");
-    const [title, setTitle] = useState(searchParams.get("title") || "");
-    const [author, setAuthor] = useState(searchParams.get("author_name") || "");
+    const [general, setGeneral] = useState(q);
+    const [title, setTitle] = useState(urlTitle);
+    const [author, setAuthor] = useState(urlAuthor);
 
     const debouncedGeneral = useDebounce(general, 500);
     const debouncedTitle = useDebounce(title, 500);
     const debouncedAuthor = useDebounce(author, 500);
 
     useEffect(() => {
-        const params = new URLSearchParams(searchParams);
-
-        if (debouncedGeneral) params.set("q", debouncedGeneral);
-        else params.delete("q");
-
-        if (debouncedTitle) params.set("title", debouncedTitle);
-        else params.delete("title");
-
-        if (debouncedAuthor) params.set("author_name", debouncedAuthor);
-        else params.delete("author_name");
-
-        params.set("page", "1");
-
-        router.push(`${pathname}?${params.toString()}`);
-    }, [debouncedGeneral, debouncedTitle, debouncedAuthor, pathname, router]);
+        setFilters({
+            q: debouncedGeneral,
+            title: debouncedTitle,
+            author_name: debouncedAuthor
+        });
+    }, [debouncedGeneral, debouncedTitle, debouncedAuthor]);
 
     useEffect(() => {
-        setGeneral(searchParams.get("q") || "");
-        setTitle(searchParams.get("title") || "");
-        setAuthor(searchParams.get("author_name") || "");
-    }, [searchParams]);
+        setGeneral(q);
+        setTitle(urlTitle);
+        setAuthor(urlAuthor);
+    }, [q, urlTitle, urlAuthor]);
 
     return (
         <div className={`flex flex-col gap-4 w-full ${className}`}>

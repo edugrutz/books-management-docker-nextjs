@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Dialog } from "@/components/ui/dialog"
-import { BookCardDialog } from "../BookCardDialog"
+import { BookCardDialog } from "@/components/books/BookCardDialog"
 import { Book } from "@/types/book"
 
 interface BookDetailsWrapperProps {

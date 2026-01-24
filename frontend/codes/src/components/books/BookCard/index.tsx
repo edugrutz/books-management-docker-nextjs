@@ -3,9 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { User, Calendar, BookOpen } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
-import { DeleteBookConfirm } from "../DeleteBookConfirm";
-import { EditBookButton } from "../EditBookButton";
-import { BookDetailsWrapper } from "../BookDetailsWrapper";
+import { DeleteBookConfirm } from "@/components/books/DeleteBookConfirm";
+import { EditBookButton } from "@/components/books/EditBookButton";
+import { BookDetailsWrapper } from "@/components/books/BookDetailsWrapper";
 
 export async function BookCard({
     book
@@ -29,8 +29,9 @@ export async function BookCard({
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <p className="text-muted-foreground line-clamp-1 flex items-center gap-2 font-medium mb-1">
-                        <User size={14} className="text-primary" /> {book.author}
+                    <p className="text-muted-foreground flex items-center gap-2 font-medium mb-1">
+                        <User size={14} className="text-primary shrink-0" />
+                        <span className="truncate">{book.author}</span>
                     </p>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
                         <Calendar size={14} />
@@ -38,10 +39,12 @@ export async function BookCard({
                     </div>
                 </CardContent>
                 <CardFooter className="flex items-center justify-end border-t border-muted/20 pt-4 mt-auto">
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground px-2 py-1 bg-secondary rounded-full">
-                        <BookOpen size={14} />
-                        <span>{book.pages} {t('pages')}</span>
-                    </div>
+                    {book.pages && book.pages > 0 && (
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground px-2 py-1 bg-secondary rounded-full">
+                            <BookOpen size={14} />
+                            <span>{book.pages} {t('pages')}</span>
+                        </div>
+                    )}
                 </CardFooter>
             </Card>
         </BookDetailsWrapper>
