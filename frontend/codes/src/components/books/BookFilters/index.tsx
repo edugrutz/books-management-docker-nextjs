@@ -8,10 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useBookFilters } from "@/hooks/useBookFilters";
-
-interface BookFiltersProps {
-    className?: string;
-}
+import { BookFiltersProps } from "./types";
 
 export function BookFilters({
     className

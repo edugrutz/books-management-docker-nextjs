@@ -1,12 +1,6 @@
-import { Book } from "@/types/book";
 import { BookCard } from "@/components/books/BookCard";
 import React from "react";
-
-interface BookListProps {
-    books: Book[];
-    headerSlot?: React.ReactNode;
-    footerSlot?: React.ReactNode;
-}
+import { BookListProps } from "./types";
 
 export function BookList({ books, headerSlot, footerSlot }: BookListProps) {
     if (!books || books.length === 0) {

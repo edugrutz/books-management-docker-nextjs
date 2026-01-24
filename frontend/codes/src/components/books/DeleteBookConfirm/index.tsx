@@ -17,11 +17,7 @@ import {
 import { deleteBookAction } from "@/actions/delete-book"
 import { toast } from "sonner"
 import { useTranslations } from "next-intl"
-
-interface DeleteBookConfirmProps {
-    bookId: number
-    bookTitle: string
-}
+import { DeleteBookConfirmProps } from "./types"
 
 export function DeleteBookConfirm({ bookId, bookTitle }: DeleteBookConfirmProps) {
     const [isDeleting, setIsDeleting] = useState(false)

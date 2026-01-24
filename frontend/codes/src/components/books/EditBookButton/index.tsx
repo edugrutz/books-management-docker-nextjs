@@ -5,11 +5,7 @@ import { Pencil } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 import { BookEditDialog } from "../BookEditDialog"
-import { Book } from "@/types/book"
-
-interface EditBookButtonProps {
-    book: Book
-}
+import { EditBookButtonProps } from "./types"
 
 export function EditBookButton({ book }: EditBookButtonProps) {
     const [open, setOpen] = useState(false)
