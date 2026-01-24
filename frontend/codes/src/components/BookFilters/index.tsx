@@ -5,27 +5,52 @@ import { Label } from "@/components/ui/label";
 import { Search, User, Layers, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useDebounce } from "@/hooks/useDebounce";
 
 interface BookFiltersProps {
-    general: string;
-    title: string;
-    author: string;
-    onGeneralChange: (value: string) => void;
-    onTitleChange: (value: string) => void;
-    onAuthorChange: (value: string) => void;
     className?: string;
 }
 
 export function BookFilters({
-    general,
-    title,
-    author,
-    onGeneralChange,
-    onTitleChange,
-    onAuthorChange,
     className
 }: BookFiltersProps) {
     const { t } = useTranslation();
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+
+    const [general, setGeneral] = useState(searchParams.get("q") || "");
+    const [title, setTitle] = useState(searchParams.get("title") || "");
+    const [author, setAuthor] = useState(searchParams.get("author_name") || "");
+
+    const debouncedGeneral = useDebounce(general, 500);
+    const debouncedTitle = useDebounce(title, 500);
+    const debouncedAuthor = useDebounce(author, 500);
+
+    useEffect(() => {
+        const params = new URLSearchParams(searchParams);
+
+        if (debouncedGeneral) params.set("q", debouncedGeneral);
+        else params.delete("q");
+
+        if (debouncedTitle) params.set("title", debouncedTitle);
+        else params.delete("title");
+
+        if (debouncedAuthor) params.set("author_name", debouncedAuthor);
+        else params.delete("author_name");
+
+        params.set("page", "1");
+
+        router.push(`${pathname}?${params.toString()}`);
+    }, [debouncedGeneral, debouncedTitle, debouncedAuthor, pathname, router]);
+
+    useEffect(() => {
+        setGeneral(searchParams.get("q") || "");
+        setTitle(searchParams.get("title") || "");
+        setAuthor(searchParams.get("author_name") || "");
+    }, [searchParams]);
 
     return (
         <div className={`flex flex-col gap-4 w-full ${className}`}>
@@ -39,7 +64,7 @@ export function BookFilters({
                         id="search-general"
                         placeholder={t('filters.placeholder_general')}
                         value={general}
-                        onChange={(e) => onGeneralChange(e.target.value)}
+                        onChange={(e) => setGeneral(e.target.value)}
                         className="pl-10 pr-10 bg-secondary"
                     />
                     {general && (
@@ -47,14 +72,14 @@ export function BookFilters({
                             variant="ghost"
                             size="icon"
                             className="absolute right-1 top-1 h-7 w-7 text-muted-foreground hover:text-foreground"
-                            onClick={() => onGeneralChange("")}
+                            onClick={() => setGeneral("")}
                         >
                             <X size={14} />
                         </Button>
                     )}
                 </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1.5">
                     <Label htmlFor="search-title" className="text-[10px] font-bold uppercase text-muted-foreground ml-1">
                         {t('filters.title')}
@@ -65,7 +90,7 @@ export function BookFilters({
                             id="search-title"
                             placeholder={t('filters.placeholder_title')}
                             value={title}
-                            onChange={(e) => onTitleChange(e.target.value)}
+                            onChange={(e) => setTitle(e.target.value)}
                             className="pl-10 pr-10 bg-secondary"
                         />
                         {title && (
@@ -73,7 +98,7 @@ export function BookFilters({
                                 variant="ghost"
                                 size="icon"
                                 className="absolute right-1 top-1 h-7 w-7 text-muted-foreground hover:text-foreground"
-                                onClick={() => onTitleChange("")}
+                                onClick={() => setTitle("")}
                             >
                                 <X size={14} />
                             </Button>
@@ -90,7 +115,7 @@ export function BookFilters({
                             id="search-author"
                             placeholder={t('filters.placeholder_author')}
                             value={author}
-                            onChange={(e) => onAuthorChange(e.target.value)}
+                            onChange={(e) => setAuthor(e.target.value)}
                             className="pl-10 pr-10 bg-secondary"
                         />
                         {author && (
@@ -98,7 +123,7 @@ export function BookFilters({
                                 variant="ghost"
                                 size="icon"
                                 className="absolute right-1 top-1 h-7 w-7 text-muted-foreground hover:text-foreground"
-                                onClick={() => onAuthorChange("")}
+                                onClick={() => setAuthor("")}
                             >
                                 <X size={14} />
                             </Button>

@@ -23,19 +23,40 @@ import {
 } from "@/components/ui/select"
 
 import { useTranslation } from "react-i18next"
+import { useRouter, useSearchParams, usePathname } from "next/navigation"
 
 export function Paginator({
     page,
     totalPages,
     pageSize,
     totalItems,
-    onPageChange,
-    onPageSizeChange,
     showNumeric = false,
     showPageSize = true,
     showCompact = false
 }: PaginatorProps) {
     const { t } = useTranslation()
+    const router = useRouter()
+    const pathname = usePathname()
+    const searchParams = useSearchParams()
+
+    const updateUrl = (paramsUpdate: Record<string, string>) => {
+        const params = new URLSearchParams(searchParams)
+        Object.entries(paramsUpdate).forEach(([key, value]) => {
+            params.set(key, value)
+        })
+        router.push(`${pathname}?${params.toString()}`)
+    }
+
+    const handlePageChange = (newPage: number) => {
+        updateUrl({ page: newPage.toString() })
+    }
+
+    const handlePageSizeChange = (newPageSize: string) => {
+        updateUrl({
+            page_size: newPageSize,
+            page: "1"
+        })
+    }
 
     const renderPageNumbers = () => {
         const pages = []
@@ -54,7 +75,7 @@ export function Paginator({
                             isActive={i === page}
                             onClick={(e) => {
                                 e.preventDefault()
-                                onPageChange(i)
+                                handlePageChange(i)
                             }}
                         >
                             {i}
@@ -82,7 +103,7 @@ export function Paginator({
                     <FieldLabel htmlFor="select-rows-per-page">{t('actions.rows_per_page')}</FieldLabel>
                     <Select
                         value={pageSize.toString()}
-                        onValueChange={(value) => onPageSizeChange(Number(value))}
+                        onValueChange={handlePageSizeChange}
                     >
                         <SelectTrigger className="w-20" id="select-rows-per-page">
                             <SelectValue />
@@ -108,7 +129,7 @@ export function Paginator({
                                 href="#"
                                 onClick={(e) => {
                                     e.preventDefault()
-                                    onPageChange(1)
+                                    handlePageChange(1)
                                 }}
                                 aria-disabled={page === 1}
                                 className={page === 1 ? "pointer-events-none opacity-50" : ""}
@@ -120,7 +141,7 @@ export function Paginator({
                             href="#"
                             onClick={(e) => {
                                 e.preventDefault()
-                                if (page > 1) onPageChange(page - 1)
+                                if (page > 1) handlePageChange(page - 1)
                             }}
                             aria-disabled={page === 1}
                             className={page === 1 ? "pointer-events-none opacity-50" : ""}
@@ -142,7 +163,7 @@ export function Paginator({
                             href="#"
                             onClick={(e) => {
                                 e.preventDefault()
-                                if (page < totalPages) onPageChange(page + 1)
+                                if (page < totalPages) handlePageChange(page + 1)
                             }}
                             aria-disabled={page === totalPages}
                             className={page === totalPages ? "pointer-events-none opacity-50" : ""}
@@ -155,7 +176,7 @@ export function Paginator({
                                 href="#"
                                 onClick={(e) => {
                                     e.preventDefault()
-                                    onPageChange(totalPages)
+                                    handlePageChange(totalPages)
                                 }}
                                 aria-disabled={page === totalPages}
                                 className={page === totalPages ? "pointer-events-none opacity-50" : ""}
