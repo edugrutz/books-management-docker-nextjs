@@ -7,6 +7,7 @@ export interface Book {
     authors?: string;
     publisher?: string;
     pubdate?: string;
+    pages?: number;
 }
 
 export type BooksResponse = {

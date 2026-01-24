@@ -10,6 +10,7 @@ export async function createBookAction(formData: FormData) {
     const author_bio = formData.get("author_bio") as string
     const publisher = formData.get("publisher") as string
     const synopsis = formData.get("synopsis") as string
+    const pages = formData.get("pages") as string
     const pubdate = formData.get("pubdate") as string
 
     const payload = {
@@ -21,6 +22,7 @@ export async function createBookAction(formData: FormData) {
         publisher: publisher || "",
         synopsis: synopsis || "",
         pubdate: pubdate || "",
+        pages: pages ? parseInt(pages) : 0,
     }
 
     const res = await fetch(`${API_URL}/api/v1/books`, {

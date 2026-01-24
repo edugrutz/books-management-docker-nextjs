@@ -92,6 +92,11 @@ export function CreateBookDialog() {
                             <Label htmlFor="publisher">{t('book.publisher')}</Label>
                             <Input id="publisher" name="publisher" placeholder="..." />
                         </div>
+
+                        <div className="space-y-2">
+                            <Label htmlFor="pages">{t('book.pages')}</Label>
+                            <Input id="pages" name="pages" type="number" placeholder="0" min="0" max="1000000" />
+                        </div>
                     </div>
 
                     <div className="space-y-2">

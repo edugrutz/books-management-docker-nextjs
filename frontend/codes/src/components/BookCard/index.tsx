@@ -3,7 +3,7 @@
 import { Book } from "@/types/book";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Trash2, Info, User, Calendar, Pencil } from "lucide-react";
+import { Trash2, Info, User, Calendar, Pencil, BookOpen } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import { useState } from "react";
 import {
@@ -56,6 +56,9 @@ export function BookCard({ book, onDelete }: { book: Book, onDelete?: (id: numbe
                     <p className="text-muted-foreground line-clamp-1 flex items-center gap-2"><User size={14} />{book.author}</p>
                     <p className="line-clamp-1 flex items-center gap-2"><Calendar size={14} />{formatDate(book.pubdate)}</p>
                 </CardContent>
+                <CardFooter className="flex items-center justify-end">
+                    <p className="text-muted-foreground line-clamp-1 flex items-center gap-2"><BookOpen size={14} />{book.pages}</p>
+                </CardFooter>
             </Card>
 
             <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>

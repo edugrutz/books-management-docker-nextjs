@@ -36,6 +36,7 @@
         "author_bio": "Biografia do Autor",
         "publisher": "Editora",
         "synopsis": "Sinopse",
+        "pages": "Páginas",
         "new_book_title": "Criar novo livro",
         "new_book_desc": "Preencha os campos abaixo para adicionar um novo livro à sua biblioteca.",
         "other_authors": "Outros Autores",

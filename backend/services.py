@@ -44,6 +44,7 @@ def serialize_book(book):
         'publisher': book['publisher'],
         'synopsis': book['synopsis'],
         'pubdate': book['pubdate'],
+        'pages': book['pages']
     }
 
 
@@ -304,11 +305,12 @@ def create_new_book(book_data):
         publisher = str(book_data.get('publisher', '')).strip()
         synopsis = str(book_data.get('synopsis', '')).strip()
         pubdate = str(book_data.get('pubdate', '')).strip()
+        pages = int(book_data.get('pages', 0))
         
         # Execute a query to create a new book
         cursor.execute(
-            'INSERT INTO book (id, title, author, author_slug, author_bio, authors, publisher, synopsis, pubdate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);',
-            (new_id, title, author, author_slug, author_bio, authors, publisher, synopsis, pubdate)
+            'INSERT INTO book (id, title, author, author_slug, author_bio, authors, publisher, synopsis, pubdate, pages) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+            (new_id, title, author, author_slug, author_bio, authors, publisher, synopsis, pubdate, pages)
         )
         
         conn.commit()
@@ -401,7 +403,7 @@ def update_book_by_id(book_id, book_data):
         tuple: (dict resposta, int status_code)
     """
 
-    updatable_fields = ['title', 'author', 'author_slug', 'author_bio', 'authors', 'publisher', 'synopsis', 'pubdate']
+    updatable_fields = ['title', 'author', 'author_slug', 'author_bio', 'authors', 'publisher', 'synopsis', 'pubdate', 'pages']
     
     # Filtrar dados para incluir apenas campos permitidos
     update_data = {k: v for k, v in book_data.items() if k in updatable_fields}

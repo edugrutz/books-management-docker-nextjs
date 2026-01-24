@@ -32,6 +32,7 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
         publisher: book.publisher || "",
         pubdate: book.pubdate || "",
         synopsis: stripHtml(book.synopsis),
+        pages: book.pages || 0,
     });
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -99,6 +100,22 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
                                 <Input
                                     value={formData.pubdate}
                                     onChange={(e) => setFormData({ ...formData, pubdate: e.target.value })}
+                                />
+                            </FieldContent>
+                        </Field>
+
+                        <Field>
+                            <FieldLabel>{t('book.pages')}</FieldLabel>
+                            <FieldContent>
+                                <Input
+                                    type="number"
+                                    value={formData.pages}
+                                    onChange={(e) => {
+                                        const val = parseInt(e.target.value) || 0;
+                                        setFormData({ ...formData, pages: Math.min(val, 1000000) });
+                                    }}
+                                    min="0"
+                                    max="1000000"
                                 />
                             </FieldContent>
                         </Field>

@@ -43,6 +43,12 @@ export function BookCardDialog({ book }: BookCardDialogProps) {
                                 <p className="text-sm font-medium">{book.authors}</p>
                             </div>
                         )}
+                        {book.pages !== undefined && book.pages >= 0 && (
+                            <div>
+                                <h4 className="text-xs uppercase font-bold text-muted-foreground mb-1">{t('book.pages')}</h4>
+                                <p className="text-sm font-medium">{book.pages}</p>
+                            </div>
+                        )}
                     </div>
                 )}
                 {book.synopsis && (
