@@ -19,7 +19,7 @@ export function BookCard({
     isDeleting = false
 }: {
     book: Book;
-    onDelete?: (id: number) => void;
+    onDelete?: (book: Book) => void;
     isDeleting?: boolean;
 }) {
     const t = useTranslations('book');
@@ -55,7 +55,7 @@ export function BookCard({
                                 className="h-8 w-8 hover:bg-destructive hover:text-white"
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    onDelete?.(book.id);
+                                    onDelete?.(book);
                                 }}
                                 disabled={isDeleting}
                             >

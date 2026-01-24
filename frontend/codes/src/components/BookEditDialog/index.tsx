@@ -17,6 +17,7 @@ import { useTranslations } from "next-intl";
 import { updateBookAction } from "@/actions/update-book";
 import { Pencil, Loader2 } from "lucide-react";
 import { stripHtml } from "@/lib/utils";
+import { toast } from "sonner";
 
 interface BookEditDialogProps {
     book: Book;
@@ -26,6 +27,7 @@ interface BookEditDialogProps {
 export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
     const t_book = useTranslations('book');
     const t_actions = useTranslations('actions');
+    const t_toast = useTranslations('toast');
 
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
@@ -42,9 +44,11 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
         setLoading(true);
         try {
             await updateBookAction(book.id, formData);
+            toast.success(t_toast('book_updated'));
             onSuccess?.();
         } catch (error) {
             console.error(error);
+            toast.error(t_toast('error_updating'));
         } finally {
             setLoading(false);
         }

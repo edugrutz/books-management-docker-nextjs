@@ -18,7 +18,8 @@
         "items": "livros cadastrados",
         "edit": "Editar",
         "save": "Salvar Alterações",
-        "saving": "Salvando..."
+        "saving": "Salvando...",
+        "error_creating": "Erro ao criar livro"
     },
     "filters": {
         "general": "Busca geral",
@@ -43,5 +44,19 @@
         "about_author": "Sobre o Autor",
         "edit_book_title": "Editar Livro",
         "edit_book_desc": "Atualize os detalhes do livro abaixo."
+    },
+    "toast": {
+        "book_created": "Livro criado com sucesso!",
+        "book_updated": "Livro atualizado com sucesso!",
+        "book_deleted": "Livro excluído com sucesso!",
+        "error_creating": "Erro ao criar livro",
+        "error_updating": "Erro ao atualizar livro",
+        "error_deleting": "Erro ao excluir livro"
+    },
+    "confirm": {
+        "delete_title": "Confirmar exclusão",
+        "delete_description": "Tem certeza que deseja excluir este livro? Esta ação não pode ser desfeita.",
+        "delete_confirm": "Sim, excluir",
+        "delete_cancel": "Cancelar"
     }
 }

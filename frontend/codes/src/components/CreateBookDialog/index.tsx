@@ -16,24 +16,26 @@ import {
 } from "@/components/ui/dialog"
 import { BookPlus, Loader2 } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { toast } from "sonner"
 
 export function CreateBookDialog() {
     const t_actions = useTranslations('actions')
     const t_book = useTranslations('book')
     const t_filters = useTranslations('filters')
+    const t_toast = useTranslations('toast')
 
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState<string | null>(null)
 
     async function handleSubmit(formData: FormData) {
         setLoading(true)
-        setError(null)
         try {
             await createBookAction(formData)
+            toast.success(t_toast('book_created'))
             setOpen(false)
         } catch (e) {
-            setError(e instanceof Error ? e.message : t_actions('error_creating'))
+            const errorMessage = e instanceof Error ? e.message : t_toast('error_creating')
+            toast.error(errorMessage)
         } finally {
             setLoading(false)
         }
@@ -55,12 +57,6 @@ export function CreateBookDialog() {
                 </DialogHeader>
 
                 <form action={handleSubmit} className="space-y-4 py-4">
-                    {error && (
-                        <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-md border border-destructive/20">
-                            {error}
-                        </div>
-                    )}
-
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <Label htmlFor="title">{t_book('title_label')} *</Label>
