@@ -1,29 +1,15 @@
 import { Book } from "@/types/book"
 import { BooksResponse } from "@/types/book"
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL
+
 export async function getBooks(page: number, pageSize: number): Promise<BooksResponse> {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/books?page=${page}&page_size=${pageSize}`, {
+    const res = await fetch(`${API_URL}/api/v1/books?page=${page}&page_size=${pageSize}`, {
         next: { tags: ["books"] },
     })
 
     if (!res.ok) {
         throw new Error("Erro ao buscar livros")
-    }
-
-    return res.json()
-}
-
-export async function updateBook(id: number, data: Partial<Book>): Promise<{ data: Book; meta: any }> {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/books/${id}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    })
-
-    if (!res.ok) {
-        throw new Error("Erro ao atualizar livro")
     }
 
     return res.json()
@@ -43,7 +29,7 @@ export async function searchBooks(
     queryParams.set("page", page.toString())
     queryParams.set("page_size", pageSize.toString())
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/books/search?${queryParams.toString()}`, {
+    const res = await fetch(`${API_URL}/api/v1/books/search?${queryParams.toString()}`, {
         next: { tags: ["books"] },
     })
 
