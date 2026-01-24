@@ -360,3 +360,88 @@ def delete_book_by_id(book_id):
     conn.close()
 
     return success_response(data=None, meta={'message': 'Book deleted successfully.'}), 200
+
+
+def get_book_by_id(book_id):
+    """
+    Busca um livro pelo ID.
+    
+    Args:
+        book_id: ID do livro
+    
+    Returns:
+        tuple: (dict resposta, int status_code)
+    """
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    try:
+        cursor.execute('SELECT * FROM book WHERE id = ?;', (book_id,))
+        book = cursor.fetchone()
+        conn.close()
+        
+        if not book:
+            return error_response('Book not found.', 404)
+            
+        return success_response(data=serialize_book(book)), 200
+    except sqlite3.Error as e:
+        if conn: conn.close()
+        return error_response(f'Erro no banco de dados: {str(e)}', 500)
+
+
+def update_book_by_id(book_id, book_data):
+    """
+    Atualiza um livro pelo ID.
+    
+    Args:
+        book_id: ID do livro
+        book_data: Dicionário com os campos a serem atualizados
+    
+    Returns:
+        tuple: (dict resposta, int status_code)
+    """
+
+    updatable_fields = ['title', 'author', 'author_slug', 'author_bio', 'authors', 'publisher', 'synopsis', 'pubdate']
+    
+    # Filtrar dados para incluir apenas campos permitidos
+    update_data = {k: v for k, v in book_data.items() if k in updatable_fields}
+    
+    if not update_data:
+        return error_response('Nenhum campo válido para atualização fornecido')
+
+    conn = None
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        
+        # Verifica se o livro existe
+        cursor.execute('SELECT id FROM book WHERE id = ?;', (book_id,))
+        if not cursor.fetchone():
+            conn.close()
+            return error_response('Book not found.', 404)
+
+        # Construir query dinamicamente
+        set_clause = ', '.join([f"{field} = ?" for field in update_data.keys()])
+        params = list(update_data.values())
+        params.append(book_id)
+        
+        query = f"UPDATE book SET {set_clause} WHERE id = ?;"
+        cursor.execute(query, params)
+        conn.commit()
+        
+        # Retornar o livro atualizado
+        cursor.execute('SELECT * FROM book WHERE id = ?;', (book_id,))
+        updated_book = cursor.fetchone()
+        conn.close()
+        
+        if not updated_book:
+            return error_response('Erro ao recuperar o livro atualizado', 500)
+            
+        return success_response(data=serialize_book(updated_book), meta={'message': 'Book updated successfully.'}), 200
+        
+    except sqlite3.Error as e:
+        if conn: conn.close()
+        return error_response(f'Erro no banco de dados: {str(e)}', 500)
+    except Exception as e:
+        if conn: conn.close()
+        return error_response(f'Erro inesperado: {str(e)}', 500)

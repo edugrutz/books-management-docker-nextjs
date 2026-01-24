@@ -9,7 +9,9 @@ from services import (
     get_authors,
     get_all_subjects,
     create_new_book,
-    delete_book_by_id
+    delete_book_by_id,
+    get_book_by_id,
+    update_book_by_id
 )
 
 app = Flask(__name__)
@@ -111,5 +113,23 @@ def create_book():
 @app.route('/api/v1/books/<int:book_id>', methods=['DELETE'])
 def delete_book(book_id):
     result, status_code = delete_book_by_id(book_id)
+    return jsonify(result), status_code
+
+
+# GET /api/v1/books/<id> - Busca um livro pelo ID
+@app.route('/api/v1/books/<int:book_id>', methods=['GET'])
+def get_book_route(book_id):
+    result, status_code = get_book_by_id(book_id)
+    return jsonify(result), status_code
+
+
+# PUT /api/v1/books/<id> - Atualiza um livro pelo ID
+@app.route('/api/v1/books/<int:book_id>', methods=['PUT'])
+def update_book_route(book_id):
+    book_data = request.get_json()
+    if not book_data:
+        return jsonify({'error': 'Corpo da requisição vazio ou inválido'}), 400
+        
+    result, status_code = update_book_by_id(book_id, book_data)
     return jsonify(result), status_code
 
