@@ -10,9 +10,11 @@
         "create": "Criar Livro",
         "creating": "Criando...",
         "delete": "Excluir",
-        "rows_per_page": "Linhas por página",
+        "rows_per_page": "Itens por página",
         "previous": "Anterior",
-        "next": "Próximo"
+        "next": "Próximo",
+        "total_items": "Total de",
+        "items": "livros cadastrados"
     },
     "filters": {
         "general": "Busca geral",

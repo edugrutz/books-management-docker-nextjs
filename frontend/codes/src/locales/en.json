@@ -10,9 +10,11 @@
         "create": "Create Book",
         "creating": "Creating...",
         "delete": "Delete",
-        "rows_per_page": "Rows per page",
+        "rows_per_page": "Itens per page",
         "previous": "Previous",
-        "next": "Next"
+        "next": "Next",
+        "total_items": "Total of",
+        "items": "books registered"
     },
     "filters": {
         "general": "General search",

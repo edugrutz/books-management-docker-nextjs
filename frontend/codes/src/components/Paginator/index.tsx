@@ -20,7 +20,7 @@ import {
 
 import { useTranslation } from "react-i18next"
 
-export function Paginator({ page, totalPages, pageSize, onPageChange, onPageSizeChange }: PaginatorProps) {
+export function Paginator({ page, totalPages, pageSize, totalItems, onPageChange, onPageSizeChange }: PaginatorProps) {
     const { t } = useTranslation()
     return (
         <div className="flex items-center justify-between gap-4">
@@ -42,6 +42,7 @@ export function Paginator({ page, totalPages, pageSize, onPageChange, onPageSize
                         </SelectGroup>
                     </SelectContent>
                 </Select>
+                <p className="text-xs">{t('actions.total_items')} {totalItems} {t('actions.items')}</p>
             </Field>
             <Pagination className="mx-0 w-auto">
                 <PaginationContent>
