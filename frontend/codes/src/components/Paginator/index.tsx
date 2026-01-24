@@ -50,6 +50,7 @@ export function Paginator({
 
     const handlePageChange = (newPage: number) => {
         updateUrl({ page: newPage.toString() })
+        window.scrollTo({ top: 0, behavior: 'smooth' })
     }
 
     const handlePageSizeChange = (newPageSize: string) => {
@@ -57,6 +58,7 @@ export function Paginator({
             page_size: newPageSize,
             page: "1"
         })
+        window.scrollTo({ top: 0, behavior: 'smooth' })
     }
 
     const renderPageNumbers = () => {

@@ -93,7 +93,15 @@ export function CreateBookDialog() {
 
                         <div className="space-y-2">
                             <Label htmlFor="pages">{t_book('pages')}</Label>
-                            <Input id="pages" name="pages" type="number" placeholder="0" min="0" max="1000000" />
+                            <Input
+                                id="pages"
+                                name="pages"
+                                type="number"
+                                inputMode="numeric"
+                                placeholder="0"
+                                min="0"
+                                max="1000000"
+                            />
                         </div>
                     </div>
 

@@ -67,7 +67,7 @@ def search_books(title=None, author_name=None, subject=None, q=None, pubdate=Non
     cursor = conn.cursor()
     
     # Construir query dinamicamente baseado nos parâmetros
-    query = 'SELECT * FROM book WHERE 1=1'
+    query = 'SELECT * FROM book WHERE id IS NOT NULL'
     params = []
     search_meta = {}
     
@@ -143,7 +143,7 @@ def get_books_by_author_slug(author_slug, page=1, page_size=10):
     conn = get_connection()
     cursor = conn.cursor()
     
-    cursor.execute('SELECT COUNT(*) FROM book WHERE author_slug = ?;', (author_slug,))
+    cursor.execute('SELECT COUNT(*) FROM book WHERE author_slug = ? AND id IS NOT NULL;', (author_slug,))
     total_count = cursor.fetchone()[0]
     
     total_pages = math.ceil(total_count / page_size) if total_count > 0 else 0
@@ -151,7 +151,7 @@ def get_books_by_author_slug(author_slug, page=1, page_size=10):
     
     # Executar query com paginação
     cursor.execute(
-        'SELECT * FROM book WHERE author_slug = ? LIMIT ? OFFSET ?;',
+        'SELECT * FROM book WHERE author_slug = ? AND id IS NOT NULL LIMIT ? OFFSET ?;',
         (author_slug, page_size, offset)
     )
     books = cursor.fetchall()
@@ -188,14 +188,14 @@ def get_all_books(page=1, page_size=10):
     conn = get_connection()
     cursor = conn.cursor()
 
-    cursor.execute('SELECT COUNT(*) FROM book;')
+    cursor.execute('SELECT COUNT(*) FROM book WHERE id IS NOT NULL;')
     total_count = cursor.fetchone()[0]
 
     total_pages = math.ceil(total_count / page_size)
 
     offset = (page - 1) * page_size
 
-    cursor.execute('SELECT * FROM book LIMIT ? OFFSET ?;', (page_size, offset))
+    cursor.execute('SELECT * FROM book WHERE id IS NOT NULL LIMIT ? OFFSET ?;', (page_size, offset))
     books = cursor.fetchall()
 
     book_list = [serialize_book(book) for book in books]

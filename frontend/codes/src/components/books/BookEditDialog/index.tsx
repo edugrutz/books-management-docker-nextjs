@@ -118,6 +118,7 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
                             <FieldContent>
                                 <Input
                                     type="number"
+                                    inputMode="numeric"
                                     value={formData.pages}
                                     onChange={(e) => {
                                         const val = parseInt(e.target.value) || 0;
