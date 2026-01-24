@@ -41,7 +41,6 @@ export function BookEditDialog({ book, onSuccess }: BookEditDialogProps) {
         try {
             await updateBookAction(book.id, formData);
             onSuccess?.();
-            window.dispatchEvent(new CustomEvent("book-created"));
         } catch (error) {
             console.error(error);
         } finally {

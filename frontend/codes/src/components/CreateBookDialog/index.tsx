@@ -28,7 +28,6 @@ export function CreateBookDialog() {
         setError(null)
         try {
             await createBookAction(formData)
-            window.dispatchEvent(new CustomEvent("book-created"))
             setOpen(false)
         } catch (e) {
             setError(e instanceof Error ? e.message : t('actions.error_creating'))

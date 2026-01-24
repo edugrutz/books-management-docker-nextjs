@@ -18,15 +18,6 @@ export function BookList({ initialBooks }: BookListProps) {
         setBooks(initialBooks);
     }, [initialBooks]);
 
-    useEffect(() => {
-        const handleBookCreated = () => {
-            router.refresh();
-        };
-
-        window.addEventListener("book-created", handleBookCreated);
-        return () => window.removeEventListener("book-created", handleBookCreated);
-    }, [router]);
-
     const handleDelete = async (id: number) => {
         setBooks(prev => prev.filter(book => book.id !== id));
 
