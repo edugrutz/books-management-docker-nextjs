@@ -1,6 +1,6 @@
 "use server"
 
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL!
 
@@ -12,5 +12,5 @@ export async function deleteBookAction(id: number) {
         throw new Error("Failed to delete book");
     }
 
-    revalidatePath("/");
+    revalidateTag("books", "max");
 }

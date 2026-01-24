@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Library } from "lucide-react";
-import { CreateBookDialog } from "@/components/CreateBookDialog";
+import { CreateBookDialog } from "@/components/books/CreateBookDialog";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { getTranslations } from "next-intl/server";

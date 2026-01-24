@@ -1,8 +1,8 @@
 import { getBooks } from "@/services/api";
 import { Paginator } from "@/components/Paginator";
-import { BookFilters } from "@/components/BookFilters";
+import { BookFilters } from "@/components/books/BookFilters";
 import { searchBooks } from "@/services/api";
-import { BookList } from "@/components/BookList";
+import { BookList } from "@/components/books/BookList";
 import { setRequestLocale } from 'next-intl/server';
 
 interface HomeProps {

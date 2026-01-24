@@ -1,6 +1,6 @@
 "use server"
 
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL!
 
@@ -17,5 +17,5 @@ export async function updateBookAction(id: number, data: any) {
         throw new Error("Failed to update book");
     }
 
-    revalidatePath("/");
+    revalidateTag("books", "max");
 }

@@ -3,7 +3,7 @@ import { BooksResponse } from "@/types/book"
 
 export async function getBooks(page: number, pageSize: number): Promise<BooksResponse> {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/books?page=${page}&page_size=${pageSize}`, {
-        cache: "no-store",
+        next: { tags: ["books"] },
     })
 
     if (!res.ok) {
@@ -44,7 +44,7 @@ export async function searchBooks(
     queryParams.set("page_size", pageSize.toString())
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/books/search?${queryParams.toString()}`, {
-        cache: "no-store",
+        next: { tags: ["books"] },
     })
 
     if (!res.ok) {
