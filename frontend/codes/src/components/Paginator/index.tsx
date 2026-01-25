@@ -61,44 +61,6 @@ export function Paginator({
         window.scrollTo({ top: 0, behavior: 'smooth' })
     }
 
-    const renderPageNumbers = () => {
-        const pages = []
-        const siblingCount = 1
-
-        for (let i = 1; i <= totalPages; i++) {
-            if (
-                i === 1 ||
-                i === totalPages ||
-                (i >= page - siblingCount && i <= page + siblingCount)
-            ) {
-                pages.push(
-                    <PaginationItem key={i}>
-                        <PaginationLink
-                            href="#"
-                            isActive={i === page}
-                            onClick={(e) => {
-                                e.preventDefault()
-                                handlePageChange(i)
-                            }}
-                        >
-                            {i}
-                        </PaginationLink>
-                    </PaginationItem>
-                )
-            } else if (
-                i === page - siblingCount - 1 ||
-                i === page + siblingCount + 1
-            ) {
-                pages.push(
-                    <PaginationItem key={i}>
-                        <PaginationEllipsis />
-                    </PaginationItem>
-                )
-            }
-        }
-        return pages
-    }
-
     return (
         <div className={`flex flex-col sm:flex-row items-center gap-4 ${(!showPageSize || showNumeric) ? "sm:justify-center" : "sm:justify-between"}`}>
             {showPageSize && (
@@ -160,7 +122,7 @@ export function Paginator({
                         </PaginationItem>
                     )}
 
-                    {showNumeric && renderPageNumbers()}
+                    {showNumeric}
 
                     <PaginationItem>
                         <PaginationNext

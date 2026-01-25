@@ -1,1 +1,0 @@
-export const MIN_PAGE_SIZE_FOR_DOUBLE_PAGINATOR = 25;

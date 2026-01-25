@@ -2,7 +2,6 @@ import { getBooks, searchBooks } from "@/services/api";
 import { BookFilters } from "@/components/books/BookFilters";
 import { BookList } from "@/components/books/BookList";
 import { Paginator } from "@/components/Paginator";
-import { MIN_PAGE_SIZE_FOR_DOUBLE_PAGINATOR } from "@/constants/pagination";
 import { setRequestLocale } from 'next-intl/server';
 import { HomeProps } from "@/types/routing";
 
@@ -49,17 +48,7 @@ export default async function Home({ params, searchParams }: HomeProps) {
       <BookFilters />
       <BookList
         books={books}
-        headerSlot={<Paginator {...paginatorProps} showCompact={true} />}
-        footerSlot={
-          pageSize >= MIN_PAGE_SIZE_FOR_DOUBLE_PAGINATOR ? (
-            <Paginator
-              {...paginatorProps}
-              showNumeric={false}
-              showCompact={true}
-              showPageSize={false}
-            />
-          ) : null
-        }
+        footerSlot={<Paginator {...paginatorProps} showCompact={true} />}
       />
     </main>
   );
