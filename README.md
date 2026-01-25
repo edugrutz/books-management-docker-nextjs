@@ -44,7 +44,6 @@ O projeto utiliza uma stack moderna e amplamente adotada pela comunidade:
 - **Biblioteca UI**: React 19.
 - **Estilização**: Tailwind CSS 3.
 - **Componentes**: shadcn/ui.
-- **Gerenciamento de Formulários**: React Hook Form + Zod.
 - **Internacionalização**: next-intl.
 - **Testes**: Playwright.
 
