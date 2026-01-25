@@ -33,6 +33,7 @@ A API opera nativamente na **porta 5000**, essencial para a comunicação corret
 
 | Método | Rota | Descrição |
 | :--- | :--- | :--- |
+| `GET` | `/health` | Check de saúde e conectividade com o banco |
 | `GET` | `/api/v1/books` | Listagem geral paginada |
 | `GET` | `/api/v1/books/search` | Busca multicritério (Título, Autor, Data, Global) |
 | `GET` | `/api/v1/books/<id>` | Detalhes de um livro específico |
@@ -40,6 +41,9 @@ A API opera nativamente na **porta 5000**, essencial para a comunicação corret
 | `PUT` | `/api/v1/books/<id>` | Atualização completa de metadados |
 | `DELETE` | `/api/v1/books/<id>` | Remoção do registro do banco |
 | `GET` | `/api/v1/authors` | Listagem de autores cadastrados |
+
+> [!NOTE]
+> A rota `/health` valida não apenas se o servidor Flask está no ar, mas também se a conexão com o banco de dados SQLite está funcional, retornando um status 500 caso ocorra falha na query de teste.
 
 ## 🐳 Docker Integration
 
