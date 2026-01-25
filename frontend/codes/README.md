@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💻 Frontend: Biblioteca Digital (Next.js)
 
-## Getting Started
+A interface de usuário do Books Management System foi desenvolvida focando em uma experiência fluida, responsiva e internacionalizada. Utilizando as tecnologias mais recentes do ecossistema React, o frontend oferece uma UX premium com transições suaves e feedback constante.
 
-First, run the development server:
+## ✨ Funcionalidades de UX/UI
+
+- **Dashboard de Busca**: Filtros dinâmicos que sincronizam automaticamente com a URL, permitindo compartilhar buscas específicas.
+- **Internacionalização (i18n)**: Suporte bilíngue total (PT/EN) gerido pelo `next-intl`, com detecção e persistência de idioma.
+- **Dark Mode**: Tema escuro e claro com persistência via `next-themes` e suporte nativo do Tailwind CSS 4.
+- **Sistema de Modais**: Diálogos intuitivos para criação e edição de livros, evitando recarregamentos de página (spa-feel).
+- **Feedbacks e Toasts**: Notificações em tempo real via `Sonner` para confirmar o sucesso ou erro de qualquer operação (CRUD).
+
+## 📁 Estrutura do Código (src)
+
+O diretório `src` está organizado para facilitar a escalabilidade e manutenção:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+src/
+├── actions/         # Server Actions para mutações de dados (Create/Delete)
+├── app/             # Rotas, Layouts e Páginas (Next.js App Router)
+│   └── [locale]/    # Agrupamento por idioma
+├── components/      # Componentes UI reutilizáveis
+│   ├── books/       # Componentes de domínio (Cards, Lists, Dialogs)
+│   └── ui/          # Componentes base do shadcn/ui (Buttons, Inputs, etc)
+├── hooks/           # Hooks customizados (Ex: useBookFilters)
+├── lib/             # Utilitários, constantes e fontes (Geist)
+├── services/        # Abstração da comunicação com a API Backend
+├── types/           # Definições de interfaces TypeScript globais
+└── messages/        # Arquivos de tradução JSON (pt.json, en.json)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔌 Integração com API Flask
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Toda a comunicação com o backend ocorre através da camada de **services/**. 
+- Recomendamos o uso da variável de ambiente `API_URL` (ou `NEXT_PUBLIC_API_URL` para chamadas no cliente) para garantir que o frontend saiba exatamente onde o backend está rodando, especialmente em diferentes ambientes (Docker vs Local).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛅 Rodando Localmente
 
-## Learn More
+Para rodar o frontend no seu ambiente de desenvolvimento sem o Docker, siga os passos:
 
-To learn more about Next.js, take a look at the following resources:
+1. **Configurar as Variáveis de Ambiente**:
+   Crie um arquivo chamado `.env` dentro da pasta `frontend/codes/` e adicione a URL da API do Backend:
+   ```env
+   API_URL=http://localhost:5000/
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Instalar as dependências**:
+   ```bash
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Iniciar o servidor de desenvolvimento**:
+   ```bash
+   npm run dev
+   ```
 
-## Deploy on Vercel
+Acesse [http://localhost:3000](http://localhost:3000) no seu navegador para ver o projeto em execução.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🐳 Docker Integration
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+O frontend está preparado para ser containerizado de forma otimizada.
+
+### Dockerfile e Build
+O projeto inclui um `Dockerfile` multi-stage e um script utilitário para facilitar o processo:
+
+1. **Build da Imagem**:
+   ```bash
+   cd frontend
+   bash build.bash
+   ```
+Este comando gera a imagem `frontend:latest` pronta para ser orquestrada pelo Docker Compose.
+
+## 🧪 Suíte de Testes (E2E)
+
+Utilizamos o **Playwright** para garantir que os fluxos principais da aplicação continuem funcionando após qualquer alteração.
+
+**Para rodar os testes localmente:**
+```bash
+cd frontend/codes
+npm install
+npx playwright test
+```
+*Os testes cobrem: Criação, Busca, Edição, Deleção e Internacionalização.*
