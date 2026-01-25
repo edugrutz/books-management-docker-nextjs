@@ -32,6 +32,7 @@ test.describe('Gerenciamento de Livros E2E', () => {
 
         await enToggle.click();
         await expect(page).toHaveURL(/.*\/en.*/, { timeout: 10000 });
+        await page.waitForTimeout(1000);
         await ptToggle.click();
         await expect(page).toHaveURL(/.*\/pt.*/, { timeout: 10000 });
     });
@@ -88,12 +89,14 @@ test.describe('Gerenciamento de Livros E2E', () => {
         await page.locator('#search-title').fill(tempTitle);
         await page.waitForTimeout(1000);
 
-        const firstCard = page.locator('div.grid > div').first();
-        await expect(firstCard).toBeVisible();
+        const bookCard = page.locator('div.grid > div', { hasText: tempTitle }).first();
+        await expect(bookCard).toBeVisible();
 
-        await firstCard.locator('button[aria-label="Excluir"]').click();
+        await bookCard.getByLabel('Excluir').click();
 
         await page.getByRole('button', { name: 'Sim, excluir' }).click();
+        await expect(page.getByRole('dialog')).not.toBeVisible();
+        await page.waitForTimeout(1000);
 
         await expect(page.getByText(tempTitle)).not.toBeVisible({ timeout: 10000 });
     });
