@@ -74,10 +74,38 @@ Este comando gera a imagem `frontend:latest` pronta para ser orquestrada pelo Do
 
 Utilizamos o **Playwright** para garantir que os fluxos principais da aplicação continuem funcionando após qualquer alteração.
 
-**Para rodar os testes localmente:**
+### Pré-requisitos para os Testes
+
+Para garantir que os testes rodem corretamente, o backend deve estar ativo. Siga estes passos na raiz do projeto:
+
+1. **Build do Backend**:
+   ```bash
+   cd backend
+   bash build.bash
+   cd ..
+   ```
+
+2. **Subir o ambiente com Docker**:
+   ```bash
+   cd _docker-compose
+   docker compose up -d
+   cd ..
+   ```
+
+3. **Configurar Ambiente do Frontend**:
+   Certifique-se de que existe um arquivo `.env` em `frontend/codes/` com a seguinte variável:
+   ```env
+   API_URL=http://localhost:5000/
+   ```
+
+### Rodando os Testes
+
+Com o ambiente preparado, execute:
+
 ```bash
 cd frontend/codes
 npm install
 npx playwright test
 ```
-*Os testes cobrem: Criação, Busca, Edição, Deleção e Internacionalização.*
+
+*Os testes cobrem: Criar, Buscar, Editar, Deletar livros e Internacionalização.*
